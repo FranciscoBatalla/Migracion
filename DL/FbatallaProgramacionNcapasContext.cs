@@ -31,6 +31,10 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
+    public virtual DbSet<UsuarioGetAllDTO> UsuarioGetAllDTOs { get; set; }
+    public virtual DbSet<RolGetAllDTO> RolGetAllDTOs { get; set; }
+
+
     public virtual DbSet<UsuarioGetAllvw> UsuarioGetAllvws { get; set; }
 
 
@@ -278,6 +282,16 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
             entity.Property(e => e.UserName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+        modelBuilder.Entity<UsuarioGetAllDTO>(entity =>
+        {
+            entity.HasNoKey();
+
+        });
+        modelBuilder.Entity<RolGetAllDTO>(entity =>
+        {
+            entity.HasNoKey();
+
         });
 
         OnModelCreatingPartial(modelBuilder);

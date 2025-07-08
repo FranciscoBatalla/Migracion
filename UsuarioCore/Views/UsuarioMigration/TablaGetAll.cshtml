@@ -5,3 +5,84 @@
 *@
 @{
 }
+
+<div class="table-responsive">
+    <table class="table">
+
+        <thead>
+            <tr>
+                <td>Editar</td>
+                <td>Eliminar</td>
+                <td>IdUsuario</td>
+                <td>UserName</td>
+                <td>Nombre</td>
+                <td>ApelidoPaterno</td>
+                <td>ApellidoMaterno</td>
+                <td>Email</td>
+                <td>Password</td>
+                <td>Sexo</td>
+                <td>Telefono</td>
+                <td>Celular</td>
+                <td>FechaNacimiento</td>
+                <td>CURP</td>
+                <td>IdRol</td>
+                <td>NombreRol</td>
+                <td>IdDireccion</td>
+                <td>Calle</td>
+                <td>NumeroInterior</td>
+                <td>NumeroExterior</td>
+                <td>IdColonia</td>
+                <td>NombreColonia</td>
+                <td>IdMunicipio</td>
+                <td>NombreMunicipio</td>
+                <td>IdEstado</td>
+                <td>NombreEstado</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach(ML.Usuario item in Model.Objects){
+                <tr>
+                <td>
+                    <a href="@Url.Action("","UsuarioMigration", new { IdUsuario = @item.IdUsuario})">
+                            <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+                <td>
+                        <a href="@Url.Action("Delete","UsuarioMigration", new { IdUsuario = @item.IdUsuario})">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                </td>
+         
+                <td>@item.IdUsuario</td>
+                <td>@item.UserName</td>
+                <td>@item.Nombre</td>
+                <td>@item.ApellidoPaterno</td>
+                <td>@item.ApellidoMaterno</td>
+                <td>@item.Email</td>
+                <td>@item.Password</td>
+                <td>@item.Sexo</td>
+                <td>@item.Telefono</td>
+                <td>@item.Celular</td>
+                <td>@item.FechaNacimiento</td>
+                <td>@item.CURP</td>
+                <td>@item.Rol.IdRol</td>
+                <td>@item.Rol.Nombre</td>
+                <td>@item.Direccion.IdDireccion</td>
+                <td>@item.Direccion.Calle</td>
+                <td>@item.Direccion.NumeroInterior</td>
+                <td>@item.Direccion.NumeroExterior</td>
+                <td>@item.Direccion.Colonia.IdColonia</td>
+                <td>@item.Direccion.Colonia.Nombre</td>
+                <td>@item.Direccion.Colonia.Municipio.IdMunicipio</td>
+                <td>@item.Direccion.Colonia.Municipio.Nombre</td>
+                <td>@item.Direccion.Colonia.Municipio.Estado.IdEstado</td>
+                <td>@item.Direccion.Colonia.Municipio.Estado.Nombre</td>
+                </tr>
+            }
+
+
+        </tbody>
+
+    </table>
+</div>
