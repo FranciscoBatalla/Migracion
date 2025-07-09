@@ -36,6 +36,8 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
 
 
     public virtual DbSet<UsuarioGetAllvw> UsuarioGetAllvws { get; set; }
+    public virtual DbSet<UsuarioDeleteDTO> UsuarioDeleteDTOs { get; set; }
+
 
 
 
@@ -292,6 +294,10 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
         {
             entity.HasNoKey();
 
+        });
+        modelBuilder.Entity<UsuarioDeleteDTO>(entity =>
+        {
+            entity.HasNoKey();
         });
 
         OnModelCreatingPartial(modelBuilder);

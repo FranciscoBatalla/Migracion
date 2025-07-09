@@ -36,5 +36,12 @@ namespace PL.Controllers
 
             return View(resultGetAll);
         }
+
+        public IActionResult Delete(int IdUsuario)
+        {
+            ML.Result resultDelete = _context.Delete(IdUsuario);
+
+            return RedirectToAction("TablaGetAll");
+        }
     }
 }

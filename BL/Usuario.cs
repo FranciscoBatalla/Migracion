@@ -59,14 +59,14 @@ namespace BL
                         }
                         else
                         {
-                            usuario.FechaNacimiento = null; 
+                            usuario.FechaNacimiento = null;
                         }
 
                         usuario.CURP = item.CURP ?? "";
                         usuario.Status = item.Status ?? false;
                         usuario.Status = false;
 
-                        usuario.Imagen = item.Imagen  ?? new byte[0];
+                        usuario.Imagen = item.Imagen ?? new byte[0];
 
                         //usuario.Rol.IdRol = item.IdRol ?? 0;
                         usuario.Rol.Nombre = item.NombreRol ?? "";
@@ -137,6 +137,31 @@ namespace BL
 
             return result;
         }// GETALLROL FUNCIONANDO
+
+        public ML.Result Delete(int IdUsuario)
+        {
+            ML.Result result = new ML.Result();
+            ML.Usuario usuario = new ML.Usuario();
+
+            try
+            {
+                var Id = new SqlParameter("@IdUsuario", IdUsuario);
+                var query = _context.Database.ExecuteSqlRaw("UsuarioDelete @IdUsuario", Id);
+
+                if (query > 0)
+                {
+                    result.Correct = true;
+                } 
+            }
+            catch (Exception Ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = Ex.Message;
+                result.Ex = Ex;
+            }
+
+            return result;
+        }
 
     }
 }
