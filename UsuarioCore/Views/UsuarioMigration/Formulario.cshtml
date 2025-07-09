@@ -1,0 +1,198 @@
+﻿@model ML.Usuario
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h1>FORMULARIO</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    @using (Html.BeginForm("Formulario", "UsuarioMigration", FormMethod.Post, new
+    {
+        enctype = "multipart/form-data",
+        @class = "row g-3 needs-validation",
+    }))
+    {
+        <div class="container my-4">
+
+            <div class="row g-3">
+                <div>
+                    @Html.HiddenFor(model => model.IdUsuario)
+                </div>
+
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.UserName, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Nombre, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.ApellidoPaterno, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.ApellidoMaterno, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = " form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Email, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Password, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Sexo, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Sexo, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Telefono, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Celular, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Celular, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.FechaNacimiento, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.CURP, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.CURP, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.CURP, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.CURP, new { @class = "form-control" })
+                </div>
+
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Rol.IdRol, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Rol.IdRol, new SelectList(Model.Rol.Roles, "IdRol", "Nombre"),
+                             "Selecciona un Rol", new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new { @class = "formlabel" })
+                    @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new SelectList(Model.Direccion.Colonia.Municipio.Estado.Estados, "IdEstado", "Nombre"),
+                             "Selecciona un Estado", new { @class = "form-control", @id = "ddlEstado" })
+                </div>
+
+
+                @if (Model.Direccion.Colonia.Municipio.Municipios != null)
+                {
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(Model.Direccion.Colonia.Municipio.Municipios, "IdMunicipio", "Nombre"),
+                                 "Selecciona un Municipio", new { @class = "form-control", @id = "ddlMunicipio", @onchange = "FillColonias()" })
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(string.Empty, "IdMunicipio", "Nombre"),
+                                 "Selecciona un Municipio", new { @class = "form-control", @id = "ddlMunicipio", @onchange = "FillColonias()" })
+                    </div>
+                }
+
+
+
+                @if (Model.Direccion.Colonia.Colonias != null)
+                {
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Direccion.Colonia.IdColonia, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(Model.Direccion.Colonia.Colonias, "IdColonia", "Nombre"),
+                                 "Selecciona una Colonia", new { @class = "form-control", @id = "ddlColonia" })
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Direccion.Colonia.IdColonia, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(string.Empty, "IdColonia", "Nombre"),
+                                 "Selecciona una Colonia", new { @class = "form-control", @id = "ddlColonia" })
+                    </div>
+                }
+
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Direccion.Calle, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", onkeypress = "ValidarConParent(input, event)" })
+                    <span hidden></span>
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Direccion.NumeroInterior, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", onkeypress = "validarSoloNumeros(this, event)" })
+
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Direccion.NumeroExterior, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", onkeypress = "validarSoloNumeros(this, event)" })
+                </div>
+
+                @Html.HiddenFor(model => model.Imagen)
+                @if (Model.Imagen != null)
+                {
+
+                    <div class="col-md-6">
+                        <label for="fileNewIssue" class="form-label">Subir archivo</label>
+
+                        <input type="file" name="ImgInputFile" multiple class="form-control" id="fileNewIssue" onchange="CargarArchivo(event)" />
+                        <img id="imgInput" width="300" height="200" src="data:image/*;base64,@(Convert.ToBase64String(Model.Imagen))" alt="Imagen de Usuario Predeterminadda" />
+                        <span id="lblMessage" style="color: red"></span>
+
+                    </div>
+                }
+                else
+                {
+
+                    <div class="col-md-6">
+                        <label for="fileNewIssue" class="form-label">Subir archivo</label>
+
+                        <input type="file" name="ImgInputFile" multiple class="form-control" id="fileNewIssue" onchange="CargarArchivo(event)" />
+                        <img id="imgInput" src="~/Content/img/predeterminda.png" alt="Imagen de Usuario Predeterminadda" width="300" height="200" />
+                        <span id="lblMessage" style="color: red"></span>
+
+                    </div>
+                }
+
+
+            </div>
+
+            <div class="mt-4 d-flex justify-content-between">
+                <a href="@Url.Action("GetAll", "Usuario")" class="btn btn-secondary">Cancelar</a>
+                <input type="submit" class="btn btn-primary" value="Enviar" />
+            </div>
+        </div>
+
+
+    }
+
+
+</div>

@@ -14,6 +14,11 @@ builder.Services.AddDbContext<FbatallaProgramacionNcapasContext>(options =>
     options.UseSqlServer(conString));
 
 builder.Services.AddScoped<BL.Usuario>();
+builder.Services.AddScoped<BL.Estado>();
+builder.Services.AddScoped<BL.Municipio>();
+
+
+
 
 var app = builder.Build();
 
