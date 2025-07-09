@@ -63,26 +63,26 @@ namespace BL
                         }
 
                         usuario.CURP = item.CURP ?? "";
-                        //usuario.Status = item.Status ?? false ;
+                        usuario.Status = item.Status ?? false;
                         usuario.Status = false;
 
                         usuario.Imagen = item.Imagen  ?? new byte[0];
 
-                        usuario.Rol.IdRol = item.IdRol ?? 0;
+                        //usuario.Rol.IdRol = item.IdRol ?? 0;
                         usuario.Rol.Nombre = item.NombreRol ?? "";
 
-                        usuario.Direccion.IdDireccion = item.IdDireccion ?? 0;
+                        //usuario.Direccion.IdDireccion = item.IdDireccion ?? 0;
                         usuario.Direccion.Calle = item.Calle ?? "";
                         usuario.Direccion.NumeroInterior = item.NumeroInterior ?? "";
                         usuario.Direccion.NumeroExterior = item.NumeroExterior ?? "";
 
-                        usuario.Direccion.Colonia.IdColonia = item.IdColonia ?? 0;
+                        //usuario.Direccion.Colonia.IdColonia = item.IdColonia ?? 0;
                         usuario.Direccion.Colonia.Nombre = item.NombreColonia ?? "";
 
-                        usuario.Direccion.Colonia.Municipio.IdMunicipio = item.IdMunicipio ?? 0;
+                        //usuario.Direccion.Colonia.Municipio.IdMunicipio = item.IdMunicipio ?? 0;
                         usuario.Direccion.Colonia.Municipio.Nombre = item.NombreMunicipio ?? "";
 
-                        usuario.Direccion.Colonia.Municipio.Estado.IdEstado = item.IdEstado ?? 0;
+                        //usuario.Direccion.Colonia.Municipio.Estado.IdEstado = item.IdEstado ?? 0;
                         usuario.Direccion.Colonia.Municipio.Estado.Nombre = item.NombreEstado ?? "";
 
 
@@ -104,7 +104,7 @@ namespace BL
             }
 
             return result;
-        }
+        }//GETALL FUNCIONANDO
         public ML.Result GetAllRol()
         {
             ML.Result result = new ML.Result();
@@ -136,7 +136,7 @@ namespace BL
             }
 
             return result;
-        }
+        }// GETALLROL FUNCIONANDO
 
     }
 }

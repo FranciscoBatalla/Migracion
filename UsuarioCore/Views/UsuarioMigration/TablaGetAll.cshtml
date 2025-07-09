@@ -5,6 +5,22 @@
 *@
 @{
 }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+             <h2>Agregar Usuario</h2>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-success"> 
+                <i class="bi bi-person-plus"></i>
+            </button>
+        </div>
+    </div>
+
+</div>
 
 <div class="table-responsive">
     <table class="table">
@@ -25,17 +41,17 @@
                 <td>Celular</td>
                 <td>FechaNacimiento</td>
                 <td>CURP</td>
-                <td>IdRol</td>
+                @* <td>IdRol</td> *@
                 <td>NombreRol</td>
-                <td>IdDireccion</td>
+                @* <td>IdDireccion</td> *@
                 <td>Calle</td>
                 <td>NumeroInterior</td>
                 <td>NumeroExterior</td>
-                <td>IdColonia</td>
+                @* <td>IdColonia</td> *@
                 <td>NombreColonia</td>
-                <td>IdMunicipio</td>
+                @* <td>IdMunicipio</td> *@
                 <td>NombreMunicipio</td>
-                <td>IdEstado</td>
+                @* <td>IdEstado</td> *@
                 <td>NombreEstado</td>
             </tr>
         </thead>
@@ -44,13 +60,13 @@
             @foreach(ML.Usuario item in Model.Objects){
                 <tr>
                 <td>
-                    <a href="@Url.Action("","UsuarioMigration", new { IdUsuario = @item.IdUsuario})">
-                            <i class="fas fa-edit"></i>
+                    <a href="@Url.Action("","UsuarioMigration", new { IdUsuario = @item.IdUsuario})" class="btn btn-warning">
+                            <i class="bi bi-pen-fill"></i>
                     </a>
                 </td>
                 <td>
-                        <a href="@Url.Action("Delete","UsuarioMigration", new { IdUsuario = @item.IdUsuario})">
-                            <i class="fas fa-trash-alt"></i>
+                        <a href="@Url.Action("Delete","UsuarioMigration", new { IdUsuario = @item.IdUsuario})" class="btn btn-danger">
+                            <i class="bi bi-person-x-fill"></i>
                         </a>
                 </td>
          
@@ -66,17 +82,17 @@
                 <td>@item.Celular</td>
                 <td>@item.FechaNacimiento</td>
                 <td>@item.CURP</td>
-                <td>@item.Rol.IdRol</td>
+                @* <td>@item.Rol.IdRol</td> *@
                 <td>@item.Rol.Nombre</td>
-                <td>@item.Direccion.IdDireccion</td>
+                @* <td>@item.Direccion.IdDireccion</td> *@
                 <td>@item.Direccion.Calle</td>
                 <td>@item.Direccion.NumeroInterior</td>
                 <td>@item.Direccion.NumeroExterior</td>
-                <td>@item.Direccion.Colonia.IdColonia</td>
+                @* <td>@item.Direccion.Colonia.IdColonia</td> *@
                 <td>@item.Direccion.Colonia.Nombre</td>
-                <td>@item.Direccion.Colonia.Municipio.IdMunicipio</td>
+                @* <td>@item.Direccion.Colonia.Municipio.IdMunicipio</td> *@
                 <td>@item.Direccion.Colonia.Municipio.Nombre</td>
-                <td>@item.Direccion.Colonia.Municipio.Estado.IdEstado</td>
+                @* <td>@item.Direccion.Colonia.Municipio.Estado.IdEstado</td> *@
                 <td>@item.Direccion.Colonia.Municipio.Estado.Nombre</td>
                 </tr>
             }
