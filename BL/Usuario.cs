@@ -150,16 +150,16 @@ namespace BL
                 var Celular = new SqlParameter("@Celular", Usuario.Celular ?? (object)DBNull.Value);
                 var Date = new SqlParameter("@FechaNacimiento", Usuario.FechaNacimiento ?? (object)DBNull.Value);
                 var Curp = new SqlParameter("@CURP", Usuario.CURP ?? (object)DBNull.Value);
-                var IdRol = new SqlParameter("@IdRol", Usuario.Rol.IdRol);
+                var IdRol = new SqlParameter("@IdRol", Usuario.Rol!.IdRol);
                 var Img = new SqlParameter("@Imagen", System.Data.SqlDbType.VarBinary);
                 if (Usuario.Imagen != null)
                 {
                     Img.Value = Usuario.Imagen;
                 }
-                var Calle = new SqlParameter("@Calle", Usuario.Direccion.Calle ?? (object)DBNull.Value);
+                var Calle = new SqlParameter("@Calle", Usuario.Direccion!.Calle ?? (object)DBNull.Value);
                 var NumeroInterior = new SqlParameter("@NumeroInterior", Usuario.Direccion.NumeroInterior ?? (object)DBNull.Value);
                 var NumeroExterior = new SqlParameter("@NumeroExterior", Usuario.Direccion.NumeroExterior ?? (object)DBNull.Value);
-                var IdColonia = new SqlParameter("@IdColonia", Usuario.Direccion.Colonia.IdColonia);
+                var IdColonia = new SqlParameter("@IdColonia", Usuario.Direccion!.Colonia!.IdColonia);
 
 
 
@@ -213,7 +213,7 @@ namespace BL
                     usuario.FechaNacimiento = query.Fecha;
                     usuario.CURP = query.CURP;
 
-                    usuario.Rol.IdRol = query.IdRol;
+                    usuario.Rol.IdRol = query.IdRol ?? 0;
                     usuario.Rol.Nombre = query.NombreRol;
 
                     usuario.Direccion.IdDireccion = query.IdDireccion ?? 0;
@@ -240,7 +240,7 @@ namespace BL
             {
                 result.Correct = false;
                 result.ErrorMessage = ex.Message;
-                result.Ex = ex;
+                result.Ex = ex; 
             }
 
 
@@ -270,7 +270,7 @@ namespace BL
                 var Img = new SqlParameter("@Imagen", System.Data.SqlDbType.VarBinary);
                 if (Usuario.Imagen != null)
                 {
-                    Img.Value = Convert.FromBase64String(Usuario.ImagenBase64);
+                    Img.Value = Convert.FromBase64String(Usuario.ImagenBase64!);
                 }
                 var Calle = new SqlParameter("@Calle", Usuario.Direccion!.Calle ?? (object)DBNull.Value);
                 var NumeroInterior = new SqlParameter("@NumeroInterior", Usuario.Direccion.NumeroInterior ?? (object)DBNull.Value);

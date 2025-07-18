@@ -32,7 +32,7 @@ namespace BL
                     {
                         ML.Estado estado = new ML.Estado();
 
-                        estado.IdEstado = item.IdEstado;
+                        estado.IdEstado = item.IdEstado ?? 0;
                         estado.Nombre = item.Nombre;
 
                         result.Objects.Add(estado);

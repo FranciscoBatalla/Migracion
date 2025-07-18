@@ -151,14 +151,14 @@ namespace PL.Controllers
                 ML.Result resultRoles = _contextRol.GetAllRol();
                 if (resultRoles.Correct)
                 {
-                    Usuario.Rol.Roles = resultRoles.Objects;
+                    Usuario.Rol!.Roles = resultRoles.Objects;
                 }
 
                 ML.Result resultEstado = _contextEstado.GetAllEstado();
 
                 if (resultEstado.Correct)
                 {
-                    Usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
+                    Usuario.Direccion!.Colonia!.Municipio!.Estado!.Estados = resultEstado.Objects;
                 }
 
 
