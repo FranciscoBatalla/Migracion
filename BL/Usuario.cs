@@ -240,7 +240,7 @@ namespace BL
             {
                 result.Correct = false;
                 result.ErrorMessage = ex.Message;
-                result.Ex = ex;
+                result.Ex = ex; 
             }
 
 
