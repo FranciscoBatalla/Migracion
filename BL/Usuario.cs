@@ -104,7 +104,7 @@ namespace BL
             }
 
             return result;
-        }//GETALL FUNCIONANDO
+        }//GETALL FUNCIONANDO PERO SIN TRAER LA FECHA
 
         public ML.Result Delete(int IdUsuario)
         {
@@ -135,9 +135,7 @@ namespace BL
         {
             ML.Result result = new ML.Result();
 
-            Usuario.Rol = new ML.Rol();
-            Usuario.Direccion = new ML.Direccion();
-            Usuario.Direccion.Colonia = new ML.Colonia();
+
             try
             {
 
@@ -180,7 +178,7 @@ namespace BL
             }
 
             return result;
-        }
+        }//FUNCIONANDO
 
         public ML.Result GetById(int IdUsuario)
         {
@@ -211,15 +209,8 @@ namespace BL
                     usuario.Sexo = query.Sexo;
                     usuario.Telefono = query.Telefono;
                     usuario.Celular = query.Celular;
-
-                    //if (!string.IsNullOrEmpty(query.Fecha) && DateTime.TryParse(query.Fecha, out DateTime fecha))
-                    //{
-                    //    usuario.FechaNacimiento = fecha;
-                    //}
-                    //else
-                    //{
-                    //    usuario.FechaNacimiento = null;
-                    //}
+                    usuario.Imagen = query.Imagen;
+                    usuario.FechaNacimiento = query.Fecha;
                     usuario.CURP = query.CURP;
 
                     usuario.Rol.IdRol = query.IdRol;
@@ -255,6 +246,54 @@ namespace BL
 
             return result;
             //}
+        } //FUNCIONANDO PERO SIN TRAER  LA IMAGEN
+
+        public ML.Result Update(ML.Usuario Usuario)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                var Id = new SqlParameter("@IdUsuario", Usuario.IdUsuario);
+                var UserName = new SqlParameter("@UserName", Usuario.UserName ?? (object)DBNull.Value);
+                var Nombre = new SqlParameter("@Nombre", Usuario.Nombre ?? (object)DBNull.Value);
+                var AP = new SqlParameter("@ApellidoPaterno", Usuario.ApellidoPaterno ?? (object)DBNull.Value);
+                var AM = new SqlParameter("@ApellidoMaterno", Usuario.ApellidoMaterno ?? (object)DBNull.Value);
+                var Email = new SqlParameter("@Email", Usuario.Email ?? (object)DBNull.Value);
+                var Pass = new SqlParameter("@Password", Usuario.Password ?? (object)DBNull.Value);
+                var sexo = new SqlParameter("@Sexo", Usuario.Sexo ?? (object)DBNull.Value);
+                var Telefono = new SqlParameter("@Telefono", Usuario.Telefono ?? (object)DBNull.Value);
+                var Celular = new SqlParameter("@Celular", Usuario.Celular ?? (object)DBNull.Value);
+                var Date = new SqlParameter("@FechaNacimiento", Usuario.FechaNacimiento ?? (object)DBNull.Value);
+                var Curp = new SqlParameter("@CURP", Usuario.CURP ?? (object)DBNull.Value);
+                var IdRol = new SqlParameter("@IdRol", Usuario.Rol!.IdRol);
+                var Img = new SqlParameter("@Imagen", System.Data.SqlDbType.VarBinary);
+                if (Usuario.Imagen != null)
+                {
+                    Img.Value = Convert.FromBase64String(Usuario.ImagenBase64);
+                }
+                var Calle = new SqlParameter("@Calle", Usuario.Direccion!.Calle ?? (object)DBNull.Value);
+                var NumeroInterior = new SqlParameter("@NumeroInterior", Usuario.Direccion.NumeroInterior ?? (object)DBNull.Value);
+                var NumeroExterior = new SqlParameter("@NumeroExterior", Usuario.Direccion.NumeroExterior ?? (object)DBNull.Value);
+                var IdColonia = new SqlParameter("@IdColonia", Usuario.Direccion!.Colonia!.IdColonia);
+
+
+                var query = _context.Database.ExecuteSqlRaw("UsuarioUpdate  @IdUsuario,@UserName, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @Email, @Password, @Sexo, @Telefono, @Celular, @FechaNacimiento, @CURP, @IdRol, @Imagen, @Calle, @NumeroInterior, @NumeroExterior,@IdColonia",  Id,UserName, Nombre, AP, AM, Email, Pass, sexo, Telefono, Celular, Date, Curp, IdRol, Img, Calle, NumeroInterior, NumeroExterior, IdColonia);
+
+                if (query > 0)
+                {
+                    result.Correct = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
         }
     }
 }

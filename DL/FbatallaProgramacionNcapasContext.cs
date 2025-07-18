@@ -41,6 +41,8 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
     public virtual DbSet<MunicipioGetByIdEstadoDTO> MunicipioGetByIdEstadoDTOs { get; set; }
     public virtual DbSet<UsuarioGetByIdDTO> UsuarioGetByIdDTOs { get; set; }
     public virtual DbSet<ColoniaGetByIdMunicipioDTO> ColoniaGetByIdMunicipioDTOs { get; set; }
+    public virtual DbSet<UsuarioUpdateDTO> UsuarioUpdateDTO { get; set; }
+
 
 
 
@@ -330,6 +332,11 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
         modelBuilder.Entity<ColoniaGetByIdMunicipioDTO>(entity =>
         {
             entity.HasNoKey();
+        });
+
+        modelBuilder.Entity<UsuarioUpdateDTO>(entitiy =>
+        {
+            entitiy.HasNoKey();
         });
         OnModelCreatingPartial(modelBuilder);
     }

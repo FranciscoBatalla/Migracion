@@ -29,265 +29,265 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-            <div class="row g-4">
-                <div>
+        <div class="row g-4">
+            <div>
                 @Html.HiddenFor(model => model.IdUsuario)
-                </div>
+            </div>
 
 
-                <div class="col-md-6">
+            <div class="col-md-6">
                 @Html.LabelFor(model => model.UserName, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", required = "required", @id = "txtUsername", onkeypress = "return validarLetrasyNumeros(this,event)", onblur = "validarLetrasyNumeros(this, event)" })
                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text text-danger" })
-                    <div class="invalid-feedback">
-                        Por favor escoje un UserName unico y sin espacios.
-                    </div>
-                    <div class="valid-feedback">
-                        Correcto!
-                    </div>
+                <div class="invalid-feedback">
+                    Por favor escoje un UserName unico y sin espacios.
                 </div>
+                <div class="valid-feedback">
+                    Correcto!
+                </div>
+            </div>
 
-                <div class="col-md-6">
+            <div class="col-md-6">
                 @Html.LabelFor(model => model.Nombre, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", required = "required", value = "", @id = "txtNombre", onkeypress = " validaLetrasConASCII(this,event)", onblur = "validarLetras(this, event)" })
                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text text-danger" })
 
-                    <div class="valid-feedback">
-                        correcto!
-                    </div>
-                    <div class="invalid-feedback">
-                        Solo se aceptan letras.
-                    </div>
+                <div class="valid-feedback">
+                    correcto!
                 </div>
-                <div class="col-md-6">
+                <div class="invalid-feedback">
+                    Solo se aceptan letras.
+                </div>
+            </div>
+            <div class="col-md-6">
                 @Html.LabelFor(model => model.ApellidoPaterno, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", required = "required", value = "", onkeypress = "return validarLetras(this,event)", onblur = "validarLetras(this, event)" })
                 @Html.ValidationMessageFor(model => model.ApellidoPaterno, "", new { @class = "text text-danger" })
 
-                    <div class="valid-feedback">
-                        correcto!
-                    </div>
-                    <div class="invalid-feedback">
-                        Solo se aceptan letras.
-                    </div>
+                <div class="valid-feedback">
+                    correcto!
                 </div>
-                <div class="col-md-6">
+                <div class="invalid-feedback">
+                    Solo se aceptan letras.
+                </div>
+            </div>
+            <div class="col-md-6">
                 @Html.LabelFor(model => model.ApellidoMaterno, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", required = "required", onkeypress = "return validarLetras(this,event)", onblur = "validarLetras(this, event)" })
                 @Html.ValidationMessageFor(model => model.ApellidoMaterno, "", new { @class = "text text-danger" })
 
-                    <div class="valid-feedback">
-                        correcto!
-                    </div>
-                    <div class="invalid-feedback">
-                        Solo se aceptan letras.
-                    </div>
+                <div class="valid-feedback">
+                    correcto!
                 </div>
+                <div class="invalid-feedback">
+                    Solo se aceptan letras.
+                </div>
+            </div>
 
-                <!-- Email Principal -->
-                <div class="col-md-6">
+            <!-- Email Principal -->
+            <div class="col-md-6">
                 @Html.LabelFor(model => model.Email, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email@example.com", id = "inputEmail" })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                </div>
+            </div>
 
-                <!-- Confirmación Email -->
-                <div class="col-md-6">
+            <!-- Confirmación Email -->
+            <div class="col-md-6">
                 @Html.LabelFor(model => model.Email, "Confirme su Email", new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email@example.com", id = "inputConfirmEmail" })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                </div>
+            </div>
 
-                <!-- Password -->
-                <div class="col-md-6">
+            <!-- Password -->
+            <div class="col-md-6">
                 @Html.LabelFor(model => model.Password, new { @class = "form-label" })
                 @Html.PasswordFor(model => model.Password, new { @class = "form-control", id = "inputPassword" })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                </div>
+            </div>
 
-                <!-- Confirmación Password -->
-                <div class="col-md-6">
+            <!-- Confirmación Password -->
+            <div class="col-md-6">
                 @Html.LabelFor(model => model.Password, "Confirme su Password", new { @class = "form-label" })
                 @Html.PasswordFor(model => model.Password, new { @class = "form-control", id = "inputConfirmPassword" })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                </div>
+            </div>
 
-                <div class="col-md-4">
+            <div class="col-md-4">
                 @Html.LabelFor(model => model.Sexo, new { @class = "form-label" }) <br />
                 @Html.RadioButtonFor(model => model.Sexo, "H", new { @class = "form-check-input", required = "required" })
-                    <label> H</label>
+                <label> H</label>
                 @Html.RadioButtonFor(model => model.Sexo, "M", new { @class = "form-check-input", required = "required" })
-                    <label> M </label>
+                <label> M </label>
 
 
-                </div>
-                <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
                 @Html.LabelFor(model => model.Telefono, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", required = "required", @id = "txtTelefono", onblur = "ValidarTelefono(this,event)" })
                 @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text text-danger" })
 
-                    <div class="valid-feedback">
-                        correcto!
-                    </div>
-                    <div class="invalid-feedback">
-                        Solo se aceptan Numeros.
-                    </div>
+                <div class="valid-feedback">
+                    correcto!
                 </div>
-                <div class="col-md-4">
+                <div class="invalid-feedback">
+                    Solo se aceptan Numeros.
+                </div>
+            </div>
+            <div class="col-md-4">
                 @Html.LabelFor(model => model.Celular, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.Celular, new { @class = "form-control", onkeypress = "validaLNumerosConASCII(this, event)" })
                 @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text text-danger" })
 
-                    <div class="valid-feedback">
-                        correcto!
-                    </div>
-                    <div class="invalid-feedback">
-                        Solo se aceptan Numeros.
-                    </div>
+                <div class="valid-feedback">
+                    correcto!
                 </div>
+                <div class="invalid-feedback">
+                    Solo se aceptan Numeros.
+                </div>
+            </div>
 
 
-                <div class="col-md-6">
+            <div class="col-md-6">
                 @Html.LabelFor(model => model.FechaNacimiento, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @id = "fecha", @readonly = "true" })
-                    <div class="valid-feedback">
-                        Correcto!
-                    </div>
-                    <div class="invalid-feedback">
-                        Fecha Invalida, intenta de nuevo!
-                    </div>
-
+                <div class="valid-feedback">
+                    Correcto!
                 </div>
-                <div class="col-md-4">
+                <div class="invalid-feedback">
+                    Fecha Invalida, intenta de nuevo!
+                </div>
+
+            </div>
+            <div class="col-md-4">
                 @Html.LabelFor(model => model.CURP, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.CURP, new { @class = "form-control", onblur = "ValidarCURP(this,event)", @id = "inputCURP" })
                 @Html.ValidationMessageFor(model => model.CURP, "", new { @class = "text text-danger" })
 
-                    <div class="valid-feedback">
-                        Es un CURP valido!
-                    </div>
-                    <div class="invalid-feedback">
-                        Tu CURP no es un CURP valido:(.
-                    </div>
+                <div class="valid-feedback">
+                    Es un CURP valido!
                 </div>
-
-
-                <div class="col-md-4">
-                @Html.LabelFor(model => model.Rol.IdRol, new { @class = "form-label" })
-                @Html.DropDownListFor(model => model.Rol.IdRol, new SelectList(Model.Rol.Roles, "IdRol", "Nombre"),
-                                  "seleccione un Rol", new { @class = "form-control", required = "required", @id = "ddlRol", onchange = "ValidarRol(this, event)", onblur = "ValidarRol(this, event)" })
-                @Html.ValidationMessageFor(model => model.Rol.IdRol, "", new { @class = "text text-danger" })
-
-                    <div class="valid-feedback">
-                        Correcto!
-                    </div>
-                    <div class="invalid-feedback">
-                        Por favor Selecciona un Rol!
-                    </div>
+                <div class="invalid-feedback">
+                    Tu CURP no es un CURP valido:(.
                 </div>
+            </div>
 
 
-                <div class="col-md-6">
-                @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new { @class = "form-label" })
-                @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado,
-                                  new SelectList(Model.Direccion.Colonia.Municipio.Estado.Estados, "IdEstado", "Nombre"),
-                                  "Selecciona un Estado", new { @class = "form-control", @id = "ddlEstado"/*  @onchange = "FillMunicipios()"  */})
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Rol!.IdRol, new { @class = "form-label" })
+                @Html.DropDownListFor(model => model.Rol!.IdRol, new SelectList(Model.Rol!.Roles, "IdRol", "Nombre"),
+                         "seleccione un Rol", new { @class = "form-control", required = "required", @id = "ddlRol", onchange = "ValidarRol(this, event)", onblur = "ValidarRol(this, event)" })
+                @Html.ValidationMessageFor(model => model.Rol!.IdRol, "", new { @class = "text text-danger" })
+
+                <div class="valid-feedback">
+                    Correcto!
                 </div>
+                <div class="invalid-feedback">
+                    Por favor Selecciona un Rol!
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Direccion!.Colonia!.Municipio!.Estado!.IdEstado, new { @class = "form-label" })
+                @Html.DropDownListFor(model => model.Direccion!.Colonia!.Municipio!.Estado!.IdEstado,
+                         new SelectList(Model.Direccion!.Colonia!.Municipio!.Estado!.Estados, "IdEstado", "Nombre"),
+                         "Selecciona un Estado", new { @class = "form-control", @id = "ddlEstado"/*  @onchange = "FillMunicipios()"  */})
+            </div>
 
 
 
             @if (Model.Direccion.Colonia.Municipio.Municipios != null)
             {
-                        <div class="col-md-6">
-                    @Html.LabelFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new { @class = "form-label" })
-                    @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(Model.Direccion.Colonia.Municipio.Municipios, "IdMunicipio", "Nombre"),
-                                      "Selecciona un Municipio", new { @class = "form-control", @id = "ddlMunicipio" /* @onchange = "FillColonias()" */ })
-                        </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Direccion!.Colonia!.Municipio!.IdMunicipio, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Direccion!.Colonia!.Municipio!.IdMunicipio, new SelectList(Model.Direccion.Colonia.Municipio.Municipios, "IdMunicipio", "Nombre"),
+                             "Selecciona un Municipio", new { @class = "form-control", @id = "ddlMunicipio" /* @onchange = "FillColonias()" */ })
+                </div>
             }
             else
             {
-                        <div class="col-md-6">
-                    @Html.LabelFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new { @class = "form-label" })
-                    @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(string.Empty, "IdMunicipio", "Nombre"),
-                                      "Selecciona un Municipio", new { @class = "form-control", @id = "ddlMunicipio"/*  @onchange = "FillColonias()" */ })
-                        </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Direccion!.Colonia!.Municipio!.IdMunicipio, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Direccion!.Colonia!.Municipio!.IdMunicipio, new SelectList(string.Empty, "IdMunicipio", "Nombre"),
+                             "Selecciona un Municipio", new { @class = "form-control", @id = "ddlMunicipio"/*  @onchange = "FillColonias()" */ })
+                </div>
             }
 
             @if (Model.Direccion.Colonia.Colonias != null)
             {
-                        <div class="col-md-6">
-                    @Html.LabelFor(model => model.Direccion.Colonia.IdColonia, new { @class = "form-label" })
-                    @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(Model.Direccion.Colonia.Colonias, "IdColonia", "Nombre"),
-                                      "Selecciona una Colonia", new { @class = "form-control", @id = "ddlColonia" })
-                        </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Direccion!.Colonia!.IdColonia, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Direccion!.Colonia!.IdColonia, new SelectList(Model.Direccion.Colonia.Colonias, "IdColonia", "Nombre"),
+                             "Selecciona una Colonia", new { @class = "form-control", @id = "ddlColonia" })
+                </div>
             }
             else
             {
-                        <div class="col-md-6">
-                    @Html.LabelFor(model => model.Direccion.Colonia.IdColonia, new { @class = "form-label" })
-                    @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(string.Empty, "IdColonia", "Nombre"),
-                                      "Selecciona una Colonia", new { @class = "form-control", @id = "ddlColonia" })
-                        </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Direccion!.Colonia!.IdColonia, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Direccion!.Colonia!.IdColonia, new SelectList(string.Empty, "IdColonia", "Nombre"),
+                             "Selecciona una Colonia", new { @class = "form-control", @id = "ddlColonia" })
+                </div>
             }
 
 
 
-                <div class="col-md-4">
-                @Html.LabelFor(model => model.Direccion.Calle, new { @class = "form-label" })
-                @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", onkeypress = "ValidarConParent(input, event)" })
-                    <span hidden></span>
-                </div>
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Direccion!.Calle, new { @class = "form-label" })
+                @Html.TextBoxFor(model => model.Direccion!.Calle, new { @class = "form-control", onkeypress = "ValidarConParent(input, event)" })
+                <span hidden></span>
+            </div>
 
-                <div class="col-md-4">
-                @Html.LabelFor(model => model.Direccion.NumeroInterior, new { @class = "form-label" })
-                @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", onkeypress = "validarSoloNumeros(this, event)" })
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Direccion!.NumeroInterior, new { @class = "form-label" })
+                @Html.TextBoxFor(model => model.Direccion!.NumeroInterior, new { @class = "form-control", onkeypress = "validarSoloNumeros(this, event)" })
 
-                </div>
+            </div>
 
-                <div class="col-md-4">
-                @Html.LabelFor(model => model.Direccion.NumeroExterior, new { @class = "form-label" })
-                @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", onkeypress = "validarSoloNumeros(this, event)" })
-                </div>
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Direccion!.NumeroExterior, new { @class = "form-label" })
+                @Html.TextBoxFor(model => model.Direccion!.NumeroExterior, new { @class = "form-control", onkeypress = "validarSoloNumeros(this, event)" })
+            </div>
 
             @Html.HiddenFor(model => model.Imagen)
             @if (Model.Imagen != null)
             {
 
-                        <div class="col-md-6">
-                            <label for="fileNewIssue" class="form-label">Subir archivo</label>
+                <div class="col-md-6">
+                    <label for="fileNewIssue" class="form-label">Subir archivo</label>
 
-                            <input type="file" name="ImgInputFile" class="form-control" id="fileNewIssue" onchange="CargarArchivo(event)" />
+                    <input type="file" name="ImgInputFile" class="form-control" id="fileNewIssue" onchange="CargarArchivo(event)" />
                     @*<img id="imgInput" width="300" height="200" src="data:image/*;base64,@(Convert.ToBase64String(Model.Imagen))" alt="Imagen de Usuario Predeterminadda" />*@
-                            <img id="imgInput" width="300" height="200" src="data:image/*;base64,@Model.Imagen" />
-                            <span id="lblMessage" style="color: red"></span>
+                    <img id="imgInput" width="300" height="200" src="data:image/*;base64,@Model.Imagen" />
+                    <span id="lblMessage" style="color: red"></span>
 
 
 
-                        </div>
+                </div>
             }
             else
             {
 
-                        <div class="col-md-6">
-                            <label for="fileNewIssue" class="form-label">Subir archivo</label>
+                <div class="col-md-6">
+                    <label for="fileNewIssue" class="form-label">Subir archivo</label>
 
-                            <input type="file" name="ImgInputFile" class="form-control" id="fileNewIssue" onchange="CargarArchivo(event)" />
-                            <img id="imgInput" src="C:\Users\digis\Documents\Francisco Batalla\Migracion.NetFramework\UsuarioCore\wwwroot\css\IMG\prede.png" alt="Imagen de Usuario Predeterminadda" width="300" height="200" />
-                            <span id="lblMessage" style="color: red"></span>
+                    <input type="file" name="ImgInputFile" class="form-control" id="fileNewIssue" onchange="CargarArchivo(event)" />
+                    <img id="imgInput" src="C:\Users\digis\Documents\Francisco Batalla\Migracion.NetFramework\UsuarioCore\wwwroot\css\IMG\prede.png" alt="Imagen de Usuario Predeterminadda" width="300" height="200" />
+                    <span id="lblMessage" style="color: red"></span>
 
-                        </div>
+                </div>
             }
 
 
 
-            </div>
+        </div>
 
 
 
-            <div class="mt-4 d-flex justify-content-between">
-                <a href="@Url.Action("TablaGetAll", "UsuarioMigration")" class="btn btn-secondary">Cancelar</a>
-                <input type="submit" class="btn btn-primary" value="Enviar" />
-            </div>
+        <div class="mt-4 d-flex justify-content-between">
+            <a href="@Url.Action("TablaGetAll", "UsuarioMigration")" class="btn btn-secondary">Cancelar</a>
+            <input type="submit" class="btn btn-primary" value="Enviar" />
+        </div>
 
 
     }

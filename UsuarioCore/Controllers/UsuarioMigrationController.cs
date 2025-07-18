@@ -133,13 +133,6 @@ namespace PL.Controllers
         public IActionResult Formulario(ML.Usuario Usuario, IFormFile ImgInputFile)
         {
 
-            Usuario.Rol = new ML.Rol();
-            Usuario.Direccion = new ML.Direccion();
-            Usuario.Direccion.Colonia = new ML.Colonia();
-            Usuario.Direccion.Colonia.Municipio = new ML.Municipio();
-            Usuario.Direccion.Colonia.Municipio.Estado = new ML.Estado();
-
-
             if (ModelState.IsValid)
             {
                 if (ImgInputFile != null && ImgInputFile.Length > 0)
@@ -152,8 +145,6 @@ namespace PL.Controllers
                     }
                 }
 
-
-
                 ML.Result resultRoles = _contextRol.GetAllRol();
                 if (resultRoles.Correct)
                 {
@@ -161,17 +152,16 @@ namespace PL.Controllers
                 }
 
                 ML.Result resultEstado = _contextEstado.GetAllEstado();
+
                 if (resultEstado.Correct)
                 {
                     Usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
                 }
 
 
-
-
                 if (Usuario.IdUsuario > 0)
                 {
-                    //ML.Result resultUpdate = _context.Update();
+                    ML.Result resultUpdate = _context.Update(Usuario);
                 }
                 else
                 {
