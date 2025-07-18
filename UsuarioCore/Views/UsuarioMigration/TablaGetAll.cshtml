@@ -11,12 +11,12 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-             <h2>Agregar Usuario</h2>
+            <h2>Agregar Usuario</h2>
         </div>
         <div class="col-6 text-end">
-            <button class="btn btn-success"> 
+            <a href="@Url.Action("Formulario","UsuarioMigration")" class="btn btn-success">
                 <i class="bi bi-person-plus"></i>
-            </button>
+            </a>
         </div>
     </div>
 
@@ -29,6 +29,7 @@
             <tr>
                 <td>Editar</td>
                 <td>Eliminar</td>
+                <td>Imagen</td>
                 <td>IdUsuario</td>
                 <td>UserName</td>
                 <td>Nombre</td>
@@ -57,43 +58,58 @@
         </thead>
         <tbody>
 
-            @foreach(ML.Usuario item in Model.Objects){
+            @foreach (ML.Usuario item in Model.Objects)
+            {
                 <tr>
-                <td>
-                    <a href="@Url.Action("","UsuarioMigration", new { IdUsuario = @item.IdUsuario})" class="btn btn-warning">
+                    <td>
+                        <a href="@Url.Action("Formulario","UsuarioMigration", new { IdUsuario = @item.IdUsuario})" class="btn btn-warning">
                             <i class="bi bi-pen-fill"></i>
-                    </a>
-                </td>
-                <td>
+                        </a>
+                    </td>
+                    <td>
                         <a href="@Url.Action("Delete","UsuarioMigration", new { IdUsuario = @item.IdUsuario})" class="btn btn-danger">
                             <i class="bi bi-person-x-fill"></i>
                         </a>
-                </td>
-         
-                <td>@item.IdUsuario</td>
-                <td>@item.UserName</td>
-                <td>@item.Nombre</td>
-                <td>@item.ApellidoPaterno</td>
-                <td>@item.ApellidoMaterno</td>
-                <td>@item.Email</td>
-                <td>@item.Password</td>
-                <td>@item.Sexo</td>
-                <td>@item.Telefono</td>
-                <td>@item.Celular</td>
-                <td>@item.FechaNacimiento</td>
-                <td>@item.CURP</td>
-                @* <td>@item.Rol.IdRol</td> *@
-                <td>@item.Rol.Nombre</td>
-                @* <td>@item.Direccion.IdDireccion</td> *@
-                <td>@item.Direccion.Calle</td>
-                <td>@item.Direccion.NumeroInterior</td>
-                <td>@item.Direccion.NumeroExterior</td>
-                @* <td>@item.Direccion.Colonia.IdColonia</td> *@
-                <td>@item.Direccion.Colonia.Nombre</td>
-                @* <td>@item.Direccion.Colonia.Municipio.IdMunicipio</td> *@
-                <td>@item.Direccion.Colonia.Municipio.Nombre</td>
-                @* <td>@item.Direccion.Colonia.Municipio.Estado.IdEstado</td> *@
-                <td>@item.Direccion.Colonia.Municipio.Estado.Nombre</td>
+                    </td>
+
+
+                    @if (item.Imagen != null)
+                    {
+                        <td>
+                            <img height="100" width="100" src="data:image/*;base64, @Convert.ToBase64String(item.Imagen)" />
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td>
+                            <img height="100" width="100" src="/css/IMG/prede.png" /> 
+                        </td>
+                    }
+                    <td>@item.IdUsuario</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.ApellidoPaterno</td>
+                    <td>@item.ApellidoMaterno</td>
+                    <td>@item.Email</td>
+                    <td>@item.Password</td>
+                    <td>@item.Sexo</td>
+                    <td>@item.Telefono</td>
+                    <td>@item.Celular</td>
+                    <td>@item.FechaNacimiento</td>
+                    <td>@item.CURP</td>
+                    @* <td>@item.Rol.IdRol</td> *@
+                    <td>@item.Rol?.Nombre</td>
+                    @* <td>@item.Direccion.IdDireccion</td> *@
+                    <td>@item.Direccion?.Calle</td>
+                    <td>@item.Direccion?.NumeroInterior</td>
+                    <td>@item.Direccion?.NumeroExterior</td>
+                    @* <td>@item.Direccion.Colonia.IdColonia</td> *@
+                    <td>@item.Direccion?.Colonia?.Nombre</td>
+                    @* <td>@item.Direccion.Colonia.Municipio.IdMunicipio</td> *@
+                    <td>@item.Direccion?.Colonia?.Municipio?.Nombre</td>
+                    @* <td>@item.Direccion.Colonia.Municipio.Estado.IdEstado</td> *@
+                    <td>@item.Direccion?.Colonia?.Municipio?.Estado?.Nombre</td>
                 </tr>
             }
 

@@ -7,47 +7,46 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    public class Rol
+    public class Estado
     {
+
         private readonly DL.FbatallaProgramacionNcapasContext _context;
-        public Rol(DL.FbatallaProgramacionNcapasContext context)
+
+        public Estado(DL.FbatallaProgramacionNcapasContext context)
         {
             _context = context;
         }
 
 
-        public ML.Result GetAllRol()
+        public ML.Result GetAllEstado()
         {
             ML.Result result = new ML.Result();
 
             try
             {
-                var query = _context.RolGetAllDTOs.FromSqlRaw("RolGetAll").ToList();
-
+                var query = _context.EstadoGetAllDTOs.FromSqlRaw("EstadoGetAll").ToList();
                 if (query.Count > 0)
                 {
                     result.Objects = new List<object>();
                     foreach (var item in query)
                     {
-                        ML.Rol rol = new ML.Rol();
-                        rol.IdRol = item.IdRol;
-                        rol.Nombre = item.NombreRol;
+                        ML.Estado estado = new ML.Estado();
 
-                        result.Objects.Add(rol);
+                        estado.IdEstado = item.IdEstado;
+                        estado.Nombre = item.Nombre;
 
+                        result.Objects.Add(estado);
                     }
                     result.Correct = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception Ex)
             {
                 result.Correct = false;
-                result.ErrorMessage = ex.Message;
-                result.Ex = ex;
+                result.ErrorMessage = Ex.Message;
+                result.Ex = Ex;
             }
-
             return result;
-        }// GETALLROL FUNCIONANDO
-
+        }
     }
 }

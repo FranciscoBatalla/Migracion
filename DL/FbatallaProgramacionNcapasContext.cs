@@ -34,8 +34,22 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
     public virtual DbSet<UsuarioGetAllDTO> UsuarioGetAllDTOs { get; set; }
     public virtual DbSet<RolGetAllDTO> RolGetAllDTOs { get; set; }
 
-
     public virtual DbSet<UsuarioGetAllvw> UsuarioGetAllvws { get; set; }
+    public virtual DbSet<UsuarioDeleteDTO> UsuarioDeleteDTOs { get; set; }
+    public virtual DbSet<UsuarioAddDTO> UsuarioAddDTOs { get; set; }
+    public virtual DbSet<EstadoGetAllDTO> EstadoGetAllDTOs { get; set; }
+    public virtual DbSet<MunicipioGetByIdEstadoDTO> MunicipioGetByIdEstadoDTOs { get; set; }
+    public virtual DbSet<UsuarioGetByIdDTO> UsuarioGetByIdDTOs { get; set; }
+    public virtual DbSet<ColoniaGetByIdMunicipioDTO> ColoniaGetByIdMunicipioDTOs { get; set; }
+    public virtual DbSet<UsuarioUpdateDTO> UsuarioUpdateDTO { get; set; }
+
+
+
+
+
+
+
+
 
 
 
@@ -293,7 +307,37 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
             entity.HasNoKey();
 
         });
+        modelBuilder.Entity<UsuarioDeleteDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<UsuarioAddDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<EstadoGetAllDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
 
+        modelBuilder.Entity<MunicipioGetByIdEstadoDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+
+        modelBuilder.Entity<UsuarioGetByIdDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<ColoniaGetByIdMunicipioDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+
+        modelBuilder.Entity<UsuarioUpdateDTO>(entitiy =>
+        {
+            entitiy.HasNoKey();
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 

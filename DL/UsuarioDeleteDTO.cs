@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DL
 {
-    public class RolGetAllDTO
+    public class UsuarioDeleteDTO
     {
-        public int IdRol { get; set; }
-        public string? NombreRol { get; set; }
+        public int IdUsuario { get; set; }
     }
 }
