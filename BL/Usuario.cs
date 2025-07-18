@@ -51,7 +51,7 @@ namespace BL
                         usuario.Sexo = item.Sexo ?? "";
                         usuario.Telefono = item.Telefono ?? "";
                         usuario.Celular = item.Celular ?? "";
-
+                        Usuario.FechaNacimiento = item.FechaNacimiento;
 
                         //if (!string.IsNullOrEmpty(item.FechaNacimiento) && DateTime.TryParse(item.FechaNacimiento, out DateTime fecha))
                         //{
@@ -294,6 +294,6 @@ namespace BL
             }
 
             return result;
-        }
+        }//FUNCIONANDO
     }
 }
