@@ -25,8 +25,11 @@ namespace PL.Controllers
             return View();
         }
 
+
         [HttpGet]
-        public IActionResult TablaGetAll()
+
+        public IActionResult TablaGetAll() 
+
         {
             ML.Usuario user = new ML.Usuario();
             user.Rol = new ML.Rol();
