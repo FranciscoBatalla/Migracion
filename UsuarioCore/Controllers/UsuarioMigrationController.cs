@@ -105,7 +105,7 @@ namespace PL.Controllers
                 //MUNICIPIOS
                 if (usuario.Direccion.Colonia.Municipio.Estado.IdEstado > 0)
                 {
-                    ML.Result resultMunicipio = _contextMunicipio.GetByIdEstado(usuario.Direccion!.Colonia!.Municipio!.Estado!.IdEstado!.Value);
+                    ML.Result resultMunicipio = _contextMunicipio.GetByIdEstado(usuario.Direccion!.Colonia!.Municipio!.Estado!.IdEstado!);
                     if (resultMunicipio.Correct)
                     {
                         usuario.Direccion.Colonia.Municipio.Municipios = resultMunicipio.Objects;
@@ -116,7 +116,7 @@ namespace PL.Controllers
 
                 if (usuario.Direccion.Colonia.Municipio.IdMunicipio > 0)
                 {
-                    ML.Result resultColonia = _contextColonia.ColoniaGetByIdMunicipio(usuario.Direccion.Colonia.Municipio.IdMunicipio.Value);
+                    ML.Result resultColonia = _contextColonia.ColoniaGetByIdMunicipio(usuario.Direccion.Colonia.Municipio.IdMunicipio);
                     if (resultColonia.Correct)
                     {
                         usuario.Direccion.Colonia.Colonias = resultColonia.Objects;
@@ -148,14 +148,14 @@ namespace PL.Controllers
                 ML.Result resultRoles = _contextRol.GetAllRol();
                 if (resultRoles.Correct)
                 {
-                    Usuario.Rol.Roles = resultRoles.Objects;
+                    Usuario.Rol!.Roles = resultRoles.Objects;
                 }
 
                 ML.Result resultEstado = _contextEstado.GetAllEstado();
 
                 if (resultEstado.Correct)
                 {
-                    Usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
+                    Usuario.Direccion!.Colonia!.Municipio!.Estado!.Estados = resultEstado.Objects;
                 }
 
 
