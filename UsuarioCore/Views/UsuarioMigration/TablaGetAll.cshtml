@@ -62,7 +62,7 @@
             {
                 <tr>
                     <td>
-                        <a href="@Url.Action("","UsuarioMigration", new { IdUsuario = @item.IdUsuario})" class="btn btn-warning">
+                        <a href="@Url.Action("Formulario","UsuarioMigration", new { IdUsuario = @item.IdUsuario})" class="btn btn-warning">
                             <i class="bi bi-pen-fill"></i>
                         </a>
                     </td>
@@ -83,7 +83,7 @@
                     else
                     {
                         <td>
-                            <img height="100" width="100" src="~/css/IMG/prede.png")" /> 
+                            <img height="100" width="100" src="/css/IMG/prede.png" /> 
                         </td>
                     }
                     <td>@item.IdUsuario</td>
@@ -99,17 +99,17 @@
                     <td>@item.FechaNacimiento</td>
                     <td>@item.CURP</td>
                     @* <td>@item.Rol.IdRol</td> *@
-                    <td>@item.Rol.Nombre</td>
+                    <td>@item.Rol?.Nombre</td>
                     @* <td>@item.Direccion.IdDireccion</td> *@
-                    <td>@item.Direccion.Calle</td>
-                    <td>@item.Direccion.NumeroInterior</td>
-                    <td>@item.Direccion.NumeroExterior</td>
+                    <td>@item.Direccion?.Calle</td>
+                    <td>@item.Direccion?.NumeroInterior</td>
+                    <td>@item.Direccion?.NumeroExterior</td>
                     @* <td>@item.Direccion.Colonia.IdColonia</td> *@
-                    <td>@item.Direccion.Colonia.Nombre</td>
+                    <td>@item.Direccion?.Colonia?.Nombre</td>
                     @* <td>@item.Direccion.Colonia.Municipio.IdMunicipio</td> *@
-                    <td>@item.Direccion.Colonia.Municipio.Nombre</td>
+                    <td>@item.Direccion?.Colonia?.Municipio?.Nombre</td>
                     @* <td>@item.Direccion.Colonia.Municipio.Estado.IdEstado</td> *@
-                    <td>@item.Direccion.Colonia.Municipio.Estado.Nombre</td>
+                    <td>@item.Direccion?.Colonia?.Municipio?.Estado?.Nombre</td>
                 </tr>
             }
 

@@ -31,7 +31,7 @@ namespace BL
                     {
                         ML.Rol rol = new ML.Rol();
                         rol.IdRol = item.IdRol;
-                        rol.Nombre = item.Nombre;
+                        rol.Nombre = item.NombreRol;
 
                         result.Objects.Add(rol);
 

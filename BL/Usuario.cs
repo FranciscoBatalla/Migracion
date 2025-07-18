@@ -52,14 +52,15 @@ namespace BL
                         usuario.Telefono = item.Telefono ?? "";
                         usuario.Celular = item.Celular ?? "";
 
-                        if (!string.IsNullOrEmpty(item.FechaNacimiento) && DateTime.TryParse(item.FechaNacimiento, out DateTime fecha))
-                        {
-                            usuario.FechaNacimiento = fecha;
-                        }
-                        else
-                        {
-                            usuario.FechaNacimiento = null;
-                        }
+
+                        //if (!string.IsNullOrEmpty(item.FechaNacimiento) && DateTime.TryParse(item.FechaNacimiento, out DateTime fecha))
+                        //{
+                        //    usuario.FechaNacimiento = fecha;
+                        //}
+                        //else
+                        //{
+                        //    usuario.FechaNacimiento = null;
+                        //}
 
                         usuario.CURP = item.CURP ?? "";
                         usuario.Status = item.Status ?? false;
@@ -104,38 +105,6 @@ namespace BL
 
             return result;
         }//GETALL FUNCIONANDO
-        //public ML.Result GetAllRol()
-        //{
-        //    ML.Result result = new ML.Result();
-
-        //    try
-        //    {
-        //        var query = _context.RolGetAllDTOs.FromSqlRaw("RolGetAll").ToList();
-
-        //        if (query.Count > 0)
-        //        {
-        //            result.Objects = new List<object>();
-        //            foreach (var item in query)
-        //            {
-        //                ML.Rol rol = new ML.Rol();
-        //                rol.IdRol = item.IdRol;
-        //                rol.Nombre = item.Nombre;
-
-        //                result.Objects.Add(rol);
-
-        //            }
-        //            result.Correct = true;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result.Correct = false;
-        //        result.ErrorMessage = ex.Message;
-        //        result.Ex = ex;
-        //    }
-
-        //    return result;
-        //}// GETALLROL FUNCIONANDO
 
         public ML.Result Delete(int IdUsuario)
         {
@@ -165,15 +134,17 @@ namespace BL
         public ML.Result Add(ML.Usuario Usuario)
         {
             ML.Result result = new ML.Result();
+
             Usuario.Rol = new ML.Rol();
             Usuario.Direccion = new ML.Direccion();
             Usuario.Direccion.Colonia = new ML.Colonia();
             try
             {
+
                 var UserName = new SqlParameter("@UserName", Usuario.UserName ?? (object)DBNull.Value);
                 var Nombre = new SqlParameter("@Nombre", Usuario.Nombre ?? (object)DBNull.Value);
                 var AP = new SqlParameter("@ApellidoPaterno", Usuario.ApellidoPaterno ?? (object)DBNull.Value);
-                var AM = new SqlParameter("@ApellidoMaterno", Usuario.ApellidoPaterno ?? (object)DBNull.Value);
+                var AM = new SqlParameter("@ApellidoMaterno", Usuario.ApellidoMaterno ?? (object)DBNull.Value);
                 var Email = new SqlParameter("@Email", Usuario.Email ?? (object)DBNull.Value);
                 var Pass = new SqlParameter("@Password", Usuario.Password ?? (object)DBNull.Value);
                 var sexo = new SqlParameter("@Sexo", Usuario.Sexo ?? (object)DBNull.Value);
@@ -190,7 +161,7 @@ namespace BL
                 var Calle = new SqlParameter("@Calle", Usuario.Direccion.Calle ?? (object)DBNull.Value);
                 var NumeroInterior = new SqlParameter("@NumeroInterior", Usuario.Direccion.NumeroInterior ?? (object)DBNull.Value);
                 var NumeroExterior = new SqlParameter("@NumeroExterior", Usuario.Direccion.NumeroExterior ?? (object)DBNull.Value);
-                var IdColonia = new SqlParameter("@IdColonia", Usuario.Direccion.Colonia);
+                var IdColonia = new SqlParameter("@IdColonia", Usuario.Direccion.Colonia.IdColonia);
 
 
 
@@ -240,14 +211,15 @@ namespace BL
                     usuario.Sexo = query.Sexo;
                     usuario.Telefono = query.Telefono;
                     usuario.Celular = query.Celular;
-                    if (!string.IsNullOrEmpty(query.FechaNacimiento) && DateTime.TryParse(query.FechaNacimiento, out DateTime fecha))
-                    {
-                        usuario.FechaNacimiento = fecha;
-                    }
-                    else
-                    {
-                        usuario.FechaNacimiento = null;
-                    }
+
+                    //if (!string.IsNullOrEmpty(query.Fecha) && DateTime.TryParse(query.Fecha, out DateTime fecha))
+                    //{
+                    //    usuario.FechaNacimiento = fecha;
+                    //}
+                    //else
+                    //{
+                    //    usuario.FechaNacimiento = null;
+                    //}
                     usuario.CURP = query.CURP;
 
                     usuario.Rol.IdRol = query.IdRol;
@@ -282,6 +254,7 @@ namespace BL
 
 
             return result;
+            //}
         }
     }
 }

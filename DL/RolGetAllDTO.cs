@@ -9,6 +9,6 @@ namespace DL
     public class RolGetAllDTO
     {
         public int IdRol { get; set; }
-        public string? Nombre { get; set; }
+        public string? NombreRol { get; set; }
     }
 }

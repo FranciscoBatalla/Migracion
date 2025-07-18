@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DL;
+using Microsoft.AspNetCore.Mvc;
+using System.IO.Pipes;
 
 namespace PL.Controllers
 {
@@ -7,12 +9,15 @@ namespace PL.Controllers
         private readonly BL.Usuario _context;
         private readonly BL.Estado _contextEstado;
         private readonly BL.Rol _contextRol;
-
-        public UsuarioMigrationController(BL.Usuario context, BL.Estado contextEstado, BL.Rol contextRol)
+        private readonly BL.Municipio _contextMunicipio;
+        private readonly BL.Colonia _contextColonia;
+        public UsuarioMigrationController(BL.Usuario context, BL.Estado contextEstado, BL.Municipio contextmunicipio, BL.Colonia contextColonia, BL.Rol contextRol)
         {
             _context = context;
             _contextEstado = contextEstado;
             _contextRol = contextRol;
+            _contextMunicipio = contextmunicipio;
+            _contextColonia = contextColonia;
         }//INYECCION DE DEPENDENCIAS
 
         public IActionResult Index()
@@ -79,51 +84,126 @@ namespace PL.Controllers
             //
 
 
-            ////MOSTRAR ROLES, ESTADOS , MUNICIPOS, COLONIAS CUANDO SE HACE CON UN GETBYID
-            //if (IdUsuario > 0)
-            //{
-            //    ////ML.Result result = BL.Usuario.GetByIdEFSP(IdUsuario.Value);
-
-            //    //UsuarioReference.UsuarioClient UsuarioByIdSOAP = new UsuarioReference.UsuarioClient();
-            //    //var respuestaSOAP = UsuarioByIdSOAP.GetById(IdUsuario.Value);
+            //MOSTRAR ROLES, ESTADOS , MUNICIPOS, COLONIAS CUANDO SE HACE CON UN GETBYID
+            if (IdUsuario > 0)
+            {
+                ML.Result resultId = _context.GetById(IdUsuario);
+                usuario = (ML.Usuario)resultId.Object!;
 
 
 
 
-            //    //usuario = GetById(IdUsuario.Value);//SOAP
-            //    //usuario = (ML.Usuario)respuestaSOAP.Object;
-
-            //    ML.Result resultId = GetByIdREST(IdUsuario.Value);
-            //    usuario = (ML.Usuario)resultId.Object;
 
 
-            //    usuario.Rol.Roles = resultRol.Objects;
+                usuario.Rol!.Roles = resultRol.Objects;
 
-            //    usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
-
-            //    //MUNICIPIOS
-            //    if (usuario.Direccion.Colonia.Municipio.Estado.IdEstado > 0)
-            //    {
-            //        ML.Result resultMunicipio = BL.Municipio.GetByIdEstado(usuario.Direccion.Colonia.Municipio.Estado.IdEstado);
-            //        if (resultMunicipio.Correct)
-            //        {
-            //            usuario.Direccion.Colonia.Municipio.Municipios = resultMunicipio.Objects;
-            //        }
-            //    }
-
-            //    //COLONIAS
-
-            //    if (usuario.Direccion.Colonia.Municipio.IdMunicipio > 0)
-            //    {
-            //        ML.Result resultColonia = BL.Colonia.ColoniaGetByIdMunicipio(usuario.Direccion.Colonia.Municipio.IdMunicipio);
-            //        if (resultColonia.Correct)
-            //        {
-            //            usuario.Direccion.Colonia.Colonias = resultColonia.Objects;
-            //        }
-            //    }
+                usuario.Direccion!.Colonia!.Municipio!.Estado!.Estados = resultEstado.Objects;
 
 
-            return View(); ;
+
+
+                //MUNICIPIOS
+                if (usuario.Direccion.Colonia.Municipio.Estado.IdEstado > 0)
+                {
+                    ML.Result resultMunicipio = _contextMunicipio.GetByIdEstado(usuario.Direccion!.Colonia!.Municipio!.Estado!.IdEstado!.Value);
+                    if (resultMunicipio.Correct)
+                    {
+                        usuario.Direccion.Colonia.Municipio.Municipios = resultMunicipio.Objects;
+                    }
+                }
+
+                //COLONIAS
+
+                if (usuario.Direccion.Colonia.Municipio.IdMunicipio > 0)
+                {
+                    ML.Result resultColonia = _contextColonia.ColoniaGetByIdMunicipio(usuario.Direccion.Colonia.Municipio.IdMunicipio.Value);
+                    if (resultColonia.Correct)
+                    {
+                        usuario.Direccion.Colonia.Colonias = resultColonia.Objects;
+                    }
+                }
+
+
+            }
+
+            return View(usuario); ;
         }
+
+        [HttpPost]
+        public IActionResult Formulario(ML.Usuario Usuario, IFormFile ImgInputFile)
+        {
+
+            Usuario.Rol = new ML.Rol();
+            Usuario.Direccion = new ML.Direccion();
+            Usuario.Direccion.Colonia = new ML.Colonia();
+            Usuario.Direccion.Colonia.Municipio = new ML.Municipio();
+            Usuario.Direccion.Colonia.Municipio.Estado = new ML.Estado();
+
+
+            if (ModelState.IsValid)
+            {
+                if (ImgInputFile != null && ImgInputFile.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        ImgInputFile.CopyTo(memoryStream);
+                        Usuario.Imagen = memoryStream.ToArray(); // Aquí se guarda la imagen como bytes
+                        Usuario.ImagenBase64 = Convert.ToBase64String(Usuario.Imagen);
+                    }
+                }
+
+
+
+                ML.Result resultRoles = _contextRol.GetAllRol();
+                if (resultRoles.Correct)
+                {
+                    Usuario.Rol.Roles = resultRoles.Objects;
+                }
+
+                ML.Result resultEstado = _contextEstado.GetAllEstado();
+                if (resultEstado.Correct)
+                {
+                    Usuario.Direccion.Colonia.Municipio.Estado.Estados = resultEstado.Objects;
+                }
+
+
+
+
+                if (Usuario.IdUsuario > 0)
+                {
+                    //ML.Result resultUpdate = _context.Update();
+                }
+                else
+                {
+                    ML.Result resultAdd = _context.Add(Usuario);
+
+                    return RedirectToAction("TablaGetAll");
+
+                }
+            }
+
+
+
+
+            return View(Usuario);
+        }//
+
+        [HttpGet]
+        public IActionResult MunicipioGetByIdEstado(int idEstado)
+        {
+            ML.Result result = _contextMunicipio.GetByIdEstado(idEstado);
+
+            return Json(result);
+
+
+        }
+        [HttpGet]
+        public IActionResult ColoniaGetByIdMunicipio(int IdMunicipio)
+        {
+            ML.Result resultColonia = _contextColonia.ColoniaGetByIdMunicipio(IdMunicipio);
+            return Json(resultColonia);
+        }
+
+
     }
 }

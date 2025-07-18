@@ -18,7 +18,7 @@ namespace DL
         public string? Sexo { get; set; }
         public string? Telefono { get; set; }
         public string? Celular { get; set; }
-        public string? FechaNacimiento { get; set; }
+        public string? Fecha { get; set; }
         public string? CURP { get; set; }
         public byte[]? Imagen { get; set; }
 

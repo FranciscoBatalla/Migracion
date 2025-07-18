@@ -27,23 +27,30 @@ namespace BL
             {
 
                 var IdMuni = new SqlParameter("@IdMunicipio", IdMunicipio);
-                var query = _context.ColoniaGetByIdMunicipioDTOs.FromSqlRaw("ColoniaGetByIdMunicipio @IdMunicipio", IdMuni).AsEnumerable().FirstOrDefault();
+                var query = _context.ColoniaGetByIdMunicipioDTOs.FromSqlRaw("ColoniaGetByIdMunicipio @IdMunicipio", IdMuni).ToList();
 
-                if(query != null)
+                if (query != null && query.Count > 0)
                 {
-                    ML.Colonia colonia = new ML.Colonia();
-                    colonia.Municipio = new ML.Municipio();
+                    result.Objects = new List<object>();
+                    foreach (var item in query)
+                    {
+                        ML.Colonia colonia = new ML.Colonia();
+                        colonia.Municipio = new ML.Municipio();
 
-                    colonia.IdColonia = query.IdColonia; 
-                    colonia.Nombre = query.Nombre;
-                    colonia.Municipio.IdMunicipio = query.IdMunicipio;
+                        colonia.IdColonia = item.IdColonia;
+                        colonia.Nombre = item.Nombre;
+                        colonia.Municipio.IdMunicipio = item.IdMunicipio;
 
-                    result.Object = colonia;
+                        result.Objects.Add(colonia);
+                    }
+                    result.Correct = true;
                 }
             }
             catch (Exception ex)
             {
-
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
             }
 
             return result;

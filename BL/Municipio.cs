@@ -27,15 +27,20 @@ namespace BL
             {
                 var Id = new SqlParameter("@IdEstado", IdEstado);
 
-                var query = _context.MunicipioGetByIdEstadoDTOs.FromSqlRaw("MunicipioGetByIdEstado @IdEstado", Id).AsEnumerable().FirstOrDefault();
+                var query = _context.MunicipioGetByIdEstadoDTOs.FromSqlRaw("MunicipioGetByIdEstado @IdEstado", Id).ToList();
 
-                if (query != null)
+                if (query.Count > 0)
                 {
-                    ML.Municipio municipio = new ML.Municipio();
-                    municipio.IdMunicipio = query.IdMunicipio;
-                    municipio.Nombre = query.Nombre;
+                    result.Objects = new List<object>();
+                    foreach (var item in query)
+                    {
+                        ML.Municipio municipio = new ML.Municipio();
+                        municipio.IdMunicipio = item.IdMunicipio;
+                        municipio.Nombre = item.Nombre;
 
-                    result.Object = municipio;
+                        result.Objects.Add(municipio);
+                    }
+
                 }
                 result.Correct = true;
 
