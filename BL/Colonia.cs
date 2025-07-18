@@ -37,9 +37,9 @@ namespace BL
                         ML.Colonia colonia = new ML.Colonia();
                         colonia.Municipio = new ML.Municipio();
 
-                        colonia.IdColonia = item.IdColonia;
+                        colonia.IdColonia = item.IdColonia ?? 0 ;
                         colonia.Nombre = item.Nombre;
-                        colonia.Municipio.IdMunicipio = item.IdMunicipio;
+                        colonia.Municipio.IdMunicipio = item.IdMunicipio ?? 0;
 
                         result.Objects.Add(colonia);
                     }

@@ -35,7 +35,7 @@ namespace BL
                     foreach (var item in query)
                     {
                         ML.Municipio municipio = new ML.Municipio();
-                        municipio.IdMunicipio = item.IdMunicipio;
+                        municipio.IdMunicipio = item.IdMunicipio ?? 0;
                         municipio.Nombre = item.Nombre;
 
                         result.Objects.Add(municipio);

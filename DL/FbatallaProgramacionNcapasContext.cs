@@ -17,7 +17,11 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
 
     public virtual DbSet<Colonium> Colonia { get; set; }
 
+    public virtual DbSet<Departamento> Departamentos { get; set; }
+
     public virtual DbSet<Direccion> Direccions { get; set; }
+
+    public virtual DbSet<Empleado> Empleados { get; set; }
 
     public virtual DbSet<Estado> Estados { get; set; }
 
@@ -31,27 +35,22 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    public virtual DbSet<UsuarioGetAllDTO> UsuarioGetAllDTOs { get; set; }
-    public virtual DbSet<RolGetAllDTO> RolGetAllDTOs { get; set; }
-
     public virtual DbSet<UsuarioGetAllvw> UsuarioGetAllvws { get; set; }
-    public virtual DbSet<UsuarioDeleteDTO> UsuarioDeleteDTOs { get; set; }
     public virtual DbSet<UsuarioAddDTO> UsuarioAddDTOs { get; set; }
+    public virtual DbSet<ColoniaGetByIdMunicipioDTO> ColoniaGetByIdMunicipioDTOs { get; set; }
     public virtual DbSet<EstadoGetAllDTO> EstadoGetAllDTOs { get; set; }
     public virtual DbSet<MunicipioGetByIdEstadoDTO> MunicipioGetByIdEstadoDTOs { get; set; }
+    public virtual DbSet<RolGetAllDTO> RolGetAllDTOs { get; set; }
+    public virtual DbSet<UsuarioDeleteDTO> UsuarioDeleteDTOs { get; set; }
+    public virtual DbSet<UsuarioGetAllDTO> UsuarioGetAllDTOs { get; set; }
     public virtual DbSet<UsuarioGetByIdDTO> UsuarioGetByIdDTOs { get; set; }
-    public virtual DbSet<ColoniaGetByIdMunicipioDTO> ColoniaGetByIdMunicipioDTOs { get; set; }
-    public virtual DbSet<UsuarioUpdateDTO> UsuarioUpdateDTO { get; set; }
+    public virtual DbSet<UsuarioUpdateDTO> UsuarioUpdateDTOs { get; set; }
 
 
 
-
-
-
-
-
-
-
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+    //        => optionsBuilder.UseSqlServer("Server=.;Database=FBatallaProgramacionNCapas;TrustServerCertificate=True;User ID=sa;Password=pass@word1;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -72,6 +71,17 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
             entity.HasOne(d => d.IdMunicipioNavigation).WithMany(p => p.Colonia)
                 .HasForeignKey(d => d.IdMunicipio)
                 .HasConstraintName("FK__Colonia__IdMunic__7E37BEF6");
+        });
+
+        modelBuilder.Entity<Departamento>(entity =>
+        {
+            entity.HasKey(e => e.IdDepartamento).HasName("PK__Departam__787A433D646114C7");
+
+            entity.ToTable("Departamento");
+
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Direccion>(entity =>
@@ -97,6 +107,40 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Direccions)
                 .HasForeignKey(d => d.IdUsuario)
                 .HasConstraintName("FK__Direccion__IdUsu__17036CC0");
+        });
+
+        modelBuilder.Entity<Empleado>(entity =>
+        {
+            entity.HasKey(e => e.IdEmpleado).HasName("PK__Empleado__CE6D8B9EEECF7A7E");
+
+            entity.ToTable("Empleado");
+
+            entity.Property(e => e.ApellidoMaterno)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ApellidoPaterno)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Curp)
+                .HasMaxLength(18)
+                .IsUnicode(false)
+                .HasColumnName("CURP");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Nss)
+                .HasMaxLength(11)
+                .IsUnicode(false)
+                .HasColumnName("NSS");
+            entity.Property(e => e.Rfc)
+                .HasMaxLength(13)
+                .IsUnicode(false)
+                .HasColumnName("RFC");
+            entity.Property(e => e.SalarioBase).HasColumnType("money");
+
+            entity.HasOne(d => d.IdDepartamentoNavigation).WithMany(p => p.Empleados)
+                .HasForeignKey(d => d.IdDepartamento)
+                .HasConstraintName("FK__Empleado__IdDepa__0A688BB1");
         });
 
         modelBuilder.Entity<Estado>(entity =>
@@ -297,35 +341,10 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
         });
-        modelBuilder.Entity<UsuarioGetAllDTO>(entity =>
-        {
-            entity.HasNoKey();
 
-        });
-        modelBuilder.Entity<RolGetAllDTO>(entity =>
-        {
-            entity.HasNoKey();
 
-        });
-        modelBuilder.Entity<UsuarioDeleteDTO>(entity =>
-        {
-            entity.HasNoKey();
-        });
+
         modelBuilder.Entity<UsuarioAddDTO>(entity =>
-        {
-            entity.HasNoKey();
-        });
-        modelBuilder.Entity<EstadoGetAllDTO>(entity =>
-        {
-            entity.HasNoKey();
-        });
-
-        modelBuilder.Entity<MunicipioGetByIdEstadoDTO>(entity =>
-        {
-            entity.HasNoKey();
-        });
-
-        modelBuilder.Entity<UsuarioGetByIdDTO>(entity =>
         {
             entity.HasNoKey();
         });
@@ -333,11 +352,36 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
         {
             entity.HasNoKey();
         });
-
-        modelBuilder.Entity<UsuarioUpdateDTO>(entitiy =>
+        modelBuilder.Entity<EstadoGetAllDTO>(entity =>
         {
-            entitiy.HasNoKey();
+            entity.HasNoKey();
         });
+        modelBuilder.Entity<MunicipioGetByIdEstadoDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<RolGetAllDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<UsuarioDeleteDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<UsuarioGetAllDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<UsuarioGetByIdDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<UsuarioUpdateDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+
+
         OnModelCreatingPartial(modelBuilder);
     }
 

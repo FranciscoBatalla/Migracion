@@ -108,7 +108,7 @@ namespace PL.Controllers
                 //MUNICIPIOS
                 if (usuario.Direccion.Colonia.Municipio.Estado.IdEstado > 0)
                 {
-                    ML.Result resultMunicipio = _contextMunicipio.GetByIdEstado(usuario.Direccion!.Colonia!.Municipio!.Estado!.IdEstado!);
+                    ML.Result resultMunicipio = _contextMunicipio.GetByIdEstado(usuario.Direccion!.Colonia!.Municipio!.Estado!.IdEstado!.Value);
                     if (resultMunicipio.Correct)
                     {
                         usuario.Direccion.Colonia.Municipio.Municipios = resultMunicipio.Objects;
@@ -119,7 +119,7 @@ namespace PL.Controllers
 
                 if (usuario.Direccion.Colonia.Municipio.IdMunicipio > 0)
                 {
-                    ML.Result resultColonia = _contextColonia.ColoniaGetByIdMunicipio(usuario.Direccion.Colonia.Municipio.IdMunicipio);
+                    ML.Result resultColonia = _contextColonia.ColoniaGetByIdMunicipio(usuario.Direccion.Colonia.Municipio.IdMunicipio.Value);
                     if (resultColonia.Correct)
                     {
                         usuario.Direccion.Colonia.Colonias = resultColonia.Objects;
