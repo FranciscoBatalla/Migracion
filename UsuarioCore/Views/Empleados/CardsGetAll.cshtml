@@ -5,3 +5,64 @@
 *@
 @{
 }
+
+<h1> TABLA EMPLEADOS</h1>
+
+<div class="container">
+
+    <div class="raw">
+
+
+        <div class="table-responsive">
+            <table class="table">
+
+                <thead>
+                    <tr>
+
+                        <td>Nombre</td>
+                        <td>Apellido Paterno</td>
+                        <td>Apellido Materno</td>
+                        <td>Fecha Nacimiento</td>
+                        <td>RFC</td>
+                        <td>NSS</td>
+                        <td>CURP</td>
+                        <td>Fecha Ingreso</td>
+                        <td>NombreDepartamento</td>
+                        <td>Salario Base</td>
+                        <td>Numero de Faltas</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (ML.Empleado item in Model.Objects)
+                    {
+                        <tr>
+                            <td>@item.Nombre</td>
+                            <td>@item.ApellidoPaterno</td>
+                            <td>@item.ApellidoMaterno</td>
+                            <td>@item.FechaNacimiento</td>
+                            <td>@item.RFC</td>
+                            <td>@item.NSS</td>
+                            <td>@item.CURP</td>
+                            <td>@item.FechaIngreso</td>
+                            <td>@item.Departamento?.Descripcion</td>
+                            <td>@item.SalarioBase</td>
+                            <td>@item.NoFaltas</td>
+
+
+
+
+
+
+                        </tr>
+                    }
+                </tbody>
+
+
+            </table>
+        </div>
+
+    </div>
+
+
+</div>

@@ -27,9 +27,7 @@ namespace PL.Controllers
 
 
         [HttpGet]
-
         public IActionResult TablaGetAll() 
-
         {
             ML.Usuario user = new ML.Usuario();
             user.Rol = new ML.Rol();
