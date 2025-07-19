@@ -45,6 +45,7 @@ namespace BL
                         empleado.FechaIngreso = item.FechaIngreso;
                         empleado.SalarioBase = item.SalarioBase;
                         empleado.NoFaltas = item.NoFaltas;
+                        empleado.Departamento.IdDepartamento = item.IdDepartamento;
                         empleado.Departamento.Descripcion = item.NombreDepartamento;
 
                         result.Objects.Add(empleado);
