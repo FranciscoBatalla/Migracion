@@ -58,7 +58,7 @@ namespace PL.Controllers
 
 
         [HttpGet]
-        public IActionResult Formulario(int IdUsuario)
+        public IActionResult Formulario(int IdUsuario)  
         {
             ML.Usuario usuario = new ML.Usuario();
             usuario.Rol = new ML.Rol();

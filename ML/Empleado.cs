@@ -10,13 +10,13 @@ namespace ML
     {
         public int? IdEmpleado { get; set; }
 
-        public string? Nombre { get; set; } = null!;
+        public string? Nombre { get; set; }
 
-        public string? ApellidoPaterno { get; set; } = null!;
+        public string? ApellidoPaterno { get; set; }
 
-        public string? ApellidoMaterno { get; set; } = null!;
+        public string? ApellidoMaterno { get; set; }
 
-        public DateTime? FechaNacimiento { get; set; }
+        public string? FechaNacimiento { get; set; }
 
         public string? RFC { get; set; }
 
@@ -24,11 +24,12 @@ namespace ML
 
         public string? CURP { get; set; }
 
-        public DateTime? FechaIngreso { get; set; }
-        public decimal? SalarioBase { get; set; }
+        public string? FechaIngreso { get; set; }
+        public Decimal? SalarioBase { get; set; }
 
         public int? NoFaltas { get; set; }
         public ML.Departamento? Departamento { get; set; }
+        public List<object>? Empleados { get; set; }
 
     }
 }

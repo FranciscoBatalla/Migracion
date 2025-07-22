@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DL
 {
-    public class EmpleadoGetAllDTO
+    public class EmpleadoGetAllViewDTO
     {
         public int IdEmpleado { get; set; }
         public string? Nombre { get; set; }

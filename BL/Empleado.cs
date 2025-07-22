@@ -19,13 +19,19 @@ namespace BL
 
         //METODO GETALL
 
-        public ML.Result EmpleadosGetAll()
+        public ML.Result EmpleadosGetAll(ML.Empleado Empleado)
         {
             ML.Result result = new ML.Result();
 
             try
             {
-                var query = _context.EmpleadoGetAllDTO.FromSqlRaw("EmpleadoGetAll").ToList();
+                var nombre = new SqlParameter("@Nombre", Empleado.Nombre ?? (object)DBNull.Value);
+                var AP = new SqlParameter("@ApellidoPaterno", Empleado.ApellidoPaterno ?? (object)DBNull.Value);
+                var IdDepto = new SqlParameter("@IdDepartamento", Empleado.Departamento.IdDepartamento);
+
+
+
+                var query = _context.EmpleadoGetAllDTO.FromSqlRaw("EmpleadoGetAll @Nombre, @ApellidoPaterno, @IdDepartamento", nombre, AP, IdDepto).ToList();
 
                 if (query.Count > 0)
                 {
@@ -35,6 +41,7 @@ namespace BL
                         ML.Empleado empleado = new ML.Empleado();
                         empleado.Departamento = new ML.Departamento();
 
+                        empleado.IdEmpleado = item.IdEmpleado;
                         empleado.Nombre = item.Nombre;
                         empleado.ApellidoPaterno = item.ApellidoPaterno;
                         empleado.ApellidoMaterno = item.ApellidoMaterno;
@@ -62,7 +69,7 @@ namespace BL
             }
 
             return result;
-        }
+        } //FUNCIOANNDO
 
         //FIN METODO GETALL
 
@@ -200,11 +207,11 @@ namespace BL
                     empleado.Nombre = query.Nombre;
                     empleado.ApellidoPaterno = query.ApellidoPaterno;
                     empleado.ApellidoMaterno = query.ApellidoMaterno;
-                    empleado.FechaNacimiento = query.FechaNacimiento;
+                    empleado.FechaNacimiento = Convert.ToString(query.FechaNacimiento);
                     empleado.RFC = query.RFC;
                     empleado.NSS = query.NSS;
                     empleado.CURP = query.CURP;
-                    empleado.FechaIngreso = query.FechaIngreso;
+                    empleado.FechaIngreso = Convert.ToString(query.FechaIngreso);
                     empleado.SalarioBase = query.SalarioBase;
                     empleado.NoFaltas = query.NoFaltas;
                     empleado.Departamento.IdDepartamento = query.IdDepartamento;

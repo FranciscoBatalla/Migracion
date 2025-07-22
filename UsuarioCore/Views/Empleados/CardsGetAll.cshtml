@@ -1,42 +1,99 @@
-﻿@model ML.Result
+﻿@model ML.Empleado
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-<h1> TABLA EMPLEADOS</h1>
+<h1>EMPLEADOS</h1>
 
 <div class="container">
+    <div class="row">
+        @using (Html.BeginForm("CardsGetAll", "Empleados", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row">
 
-    <div class="raw">
+                @Html.HiddenFor(model => model.IdEmpleado)
+
+                <div class="col-2">
+                    @Html.LabelFor(model => model.Nombre, new { @class = "label-control" })
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                </div>
+
+                <div class="col-3">
+                    @Html.LabelFor(model => model.ApellidoPaterno, new { @class = "label-control" })
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control" })
+                </div>
 
 
+                @if (Model.Departamento.IdDepartamento != 0)
+                {
+                    <div class="col-3 text-center  align-content-center">
+                        @Html.LabelFor(model => model.Departamento.Descripcion, new { @class = "label-control" })
+                        @Html.DropDownListFor(model => model.Departamento.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
+                                 "Selecciona un Departamento", new { @class = "form-control" })
+
+                    </div>
+                }
+                else
+                {
+                    <div class="col-3 text-center align-content-center">
+                        @Html.DropDownListFor(model => model.Departamento.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
+                                 "Selecciona un Departamento", new { @class = "form-control" })
+
+                    </div>
+                }
+
+
+                <div class="col-2 align-content-center">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+
+                <div class="col-2 align-content-center">
+                    <a href="@Url.Action("Formulario", "Empleados")" class="btn btn-success">
+                        Add
+                    </a>
+                </div>
+
+            </div>
+
+        }
+        <div class="row">
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<div class="container mt-4">
+    <div class="row">
         <div class="table-responsive">
-            <table class="table">
-
-                <thead>
+            <table class="table table-bordered table-striped">
+                <thead class="table-primary">
                     <tr>
-
-                        <td>Nombre</td>
-                        <td>Apellido Paterno</td>
-                        <td>Apellido Materno</td>
-                        <td>Fecha Nacimiento</td>
-                        <td>RFC</td>
-                        <td>NSS</td>
-                        <td>CURP</td>
-                        <td>Fecha Ingreso</td>
-                        <td>NombreDepartamento</td>
-                        <td>Salario Base</td>
-                        <td>Numero de Faltas</td>
+                        <th>Editar</th>
+                        <th>IdEmpleado</th>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>RFC</th>
+                        <th>NSS</th>
+                        <th>CURP</th>
+                        <th>Fecha Ingreso</th>
+                        <th>Departamento</th>
+                        <th>Salario Base</th>
+                        <th>Faltas</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
-
-                    @foreach (ML.Empleado item in Model.Objects)
+                    @foreach (ML.Empleado item in Model.Empleados)
                     {
                         <tr>
+                            <td>
+                                <button class="btn btn-warning">
+                                    <i class="bi bi-person-fill-gear"></i> Editar
+                                </button>
+                            </td>
+                            <td>@item.IdEmpleado</td>
                             <td>@item.Nombre</td>
                             <td>@item.ApellidoPaterno</td>
                             <td>@item.ApellidoMaterno</td>
@@ -46,23 +103,17 @@
                             <td>@item.CURP</td>
                             <td>@item.FechaIngreso</td>
                             <td>@item.Departamento?.Descripcion</td>
-                            <td>@item.SalarioBase</td>
+                            <td>@item.SalarioBase?.ToString("C")</td>
                             <td>@item.NoFaltas</td>
-
-
-
-
-
-
+                            <td>
+                                <button class="btn btn-danger">
+                                    <i class="bi bi-person-dash-fill"></i> Eliminar
+                                </button>
+                            </td>
                         </tr>
                     }
                 </tbody>
-
-
             </table>
         </div>
-
     </div>
-
-
 </div>

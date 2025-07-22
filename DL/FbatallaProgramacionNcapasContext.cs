@@ -36,6 +36,8 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     public virtual DbSet<UsuarioGetAllvw> UsuarioGetAllvws { get; set; }
+    public virtual DbSet<EmpleadoGetAllViewDTO> EmpleadoGetAllViewDTOs { get; set; }
+
 
     //DTOs for Usuario
     public virtual DbSet<UsuarioAddDTO> UsuarioAddDTOs { get; set; }
@@ -424,6 +426,10 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
             entity.HasNoKey();
         });
 
+        modelBuilder.Entity<EmpleadoGetAllViewDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 
