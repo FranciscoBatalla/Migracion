@@ -18,6 +18,11 @@ builder.Services.AddScoped<BL.Rol>();
 builder.Services.AddScoped<BL.Estado>();
 builder.Services.AddScoped<BL.Colonia>();
 builder.Services.AddScoped<BL.Municipio>();
+builder.Services.AddScoped<BL.Empleado>();
+builder.Services.AddScoped<BL.Departamento>();
+builder.Services.AddScoped<BL.Empleado>();
+
+
 
 
 

@@ -27,9 +27,7 @@ namespace PL.Controllers
 
 
         [HttpGet]
-
         public IActionResult TablaGetAll() 
-
         {
             ML.Usuario user = new ML.Usuario();
             user.Rol = new ML.Rol();
@@ -60,7 +58,7 @@ namespace PL.Controllers
 
 
         [HttpGet]
-        public IActionResult Formulario(int IdUsuario)
+        public IActionResult Formulario(int IdUsuario)  
         {
             ML.Usuario usuario = new ML.Usuario();
             usuario.Rol = new ML.Rol();
@@ -124,7 +122,7 @@ namespace PL.Controllers
                     {
                         usuario.Direccion.Colonia.Colonias = resultColonia.Objects;
                     }
-                }
+                } 
 
 
             }

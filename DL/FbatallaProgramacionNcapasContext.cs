@@ -36,21 +36,42 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     public virtual DbSet<UsuarioGetAllvw> UsuarioGetAllvws { get; set; }
+    public virtual DbSet<EmpleadoGetAllViewDTO> EmpleadoGetAllViewDTOs { get; set; }
+
+
+    //DTOs for Usuario
     public virtual DbSet<UsuarioAddDTO> UsuarioAddDTOs { get; set; }
-    public virtual DbSet<ColoniaGetByIdMunicipioDTO> ColoniaGetByIdMunicipioDTOs { get; set; }
-    public virtual DbSet<EstadoGetAllDTO> EstadoGetAllDTOs { get; set; }
-    public virtual DbSet<MunicipioGetByIdEstadoDTO> MunicipioGetByIdEstadoDTOs { get; set; }
-    public virtual DbSet<RolGetAllDTO> RolGetAllDTOs { get; set; }
+
     public virtual DbSet<UsuarioDeleteDTO> UsuarioDeleteDTOs { get; set; }
     public virtual DbSet<UsuarioGetAllDTO> UsuarioGetAllDTOs { get; set; }
     public virtual DbSet<UsuarioGetByIdDTO> UsuarioGetByIdDTOs { get; set; }
     public virtual DbSet<UsuarioUpdateDTO> UsuarioUpdateDTOs { get; set; }
+    //FIN DTOs for Usuario
+
+    //DTO DE COLONIA MUNICIPIO Y ESTADO
+    public virtual DbSet<ColoniaGetByIdMunicipioDTO> ColoniaGetByIdMunicipioDTOs { get; set; }
+    public virtual DbSet<EstadoGetAllDTO> EstadoGetAllDTOs { get; set; }
+    public virtual DbSet<MunicipioGetByIdEstadoDTO> MunicipioGetByIdEstadoDTOs { get; set; }
+    // FIN DTO DE COLONIA MUNICIPIO Y ESTADO
 
 
+    // DTOs for Rol
+    public virtual DbSet<RolGetAllDTO> RolGetAllDTOs { get; set; }
+    // FIN DTOs for Rol
 
-    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-    //        => optionsBuilder.UseSqlServer("Server=.;Database=FBatallaProgramacionNCapas;TrustServerCertificate=True;User ID=sa;Password=pass@word1;");
+    //DTO PARA SP EMPLEADO 
+
+    public virtual DbSet<AgregarEmpleadoDTO> AgregarEmpleadoDTO { get; set; }
+    public virtual DbSet<EmpleadoGetAllDTO> EmpleadoGetAllDTO { get; set; }
+    public virtual DbSet<EmpleadoGetByIdDTO> EmpleadoGetByIdDTO { get; set; }
+    public virtual DbSet<ActualizarEmpleadoDTO> ActualizarEmpleadoDTO { get; set; }
+    public virtual DbSet<EliminarEmpleadoDTO> EliminarEmpleadoDTO { get; set; }
+
+    //FIN DTO PARA SP EMPLEADO
+
+    //SP DEPARTAMENTO
+    public virtual DbSet<DepartamentoGetAllDTO> DepartamentoGetAllDTO { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -343,7 +364,6 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
         });
 
 
-
         modelBuilder.Entity<UsuarioAddDTO>(entity =>
         {
             entity.HasNoKey();
@@ -381,7 +401,35 @@ public partial class FbatallaProgramacionNcapasContext : DbContext
             entity.HasNoKey();
         });
 
+        modelBuilder.Entity<AgregarEmpleadoDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<ActualizarEmpleadoDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<EliminarEmpleadoDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<EmpleadoGetAllDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<EmpleadoGetByIdDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
+        modelBuilder.Entity<DepartamentoGetAllDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
 
+        modelBuilder.Entity<EmpleadoGetAllViewDTO>(entity =>
+        {
+            entity.HasNoKey();
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 

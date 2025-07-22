@@ -109,7 +109,7 @@ namespace BL
         public ML.Result Delete(int IdUsuario)
         {
             ML.Result result = new ML.Result();
-            ML.Usuario usuario = new ML.Usuario();
+            //ML.Usuario usuario = new ML.Usuario();
 
             try
             {
