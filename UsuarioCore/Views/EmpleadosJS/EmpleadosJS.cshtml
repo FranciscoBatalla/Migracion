@@ -1,5 +1,207 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ML.Empleado
+
 @{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Lista de Empleados</h2>
+
+    <button id="btnAgregar" class="btn btn-success mb-3">Agregar Empleado</button>
+
+    <table class="table table-responsive" id="tblEmpleados">
+        <thead class="thead-dark">
+            <tr>
+                <th>Editar</th>
+                <th>IdEmpleado</th>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Fecha Nacimiento</th>
+                <th>RFC</th>
+                <th>NSS</th>
+                <th>CURP</th>
+                <th>Fecha Ingreso</th>
+                <th>Departamento</th>
+                <th>Salario Base</th>
+                <th>Faltas</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal para agregar/editar -->
+<div class="modal fade" id="modalEmpleado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Agregar Empleado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="IdEmpleado" />
+
+                <div class="form-group">
+                    <label for="Nombre">Nombre</label>
+                    <input type="text" id="Nombre" name="Nombre" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="ApellidoPaterno">Apellido Paterno</label>
+                    <input type="text" id="ApellidoPaterno" name="ApellidoPaterno" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="FechaNacimiento">Fecha de Nacimiento</label>
+                    <input type="date" id="FechaNacimiento" name="FechaNacimiento" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="RFC">RFC</label>
+                    <input type="text" id="RFC" name="RFC" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="NSS">NSS</label>
+                    <input type="text" id="NSS" name="NSS" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="CURP">CURP</label>
+                    <input type="text" id="CURP" name="CURP" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="FechaIngreso">Fecha Ingreso</label>
+                    <input type="date" id="FechaIngreso" name="FechaIngreso" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="SalarioBase">Salario Base</label>
+                    <input type="number" id="SalarioBase" name="SalarioBase" class="form-control" step="0.01" min="0" />
+                </div>
+
+                <div class="form-group">
+                    <label for="NoFaltas">Número de Faltas</label>
+                    <input type="number" id="NoFaltas" name="NoFaltas" class="form-control" min="0" />
+                </div>
+
+                <div class="form-group">
+                    <label for="IdDepartamento">Departamento</label>
+                    <select id="IdDepartamento" name="IdDepartamento" class="form-control">
+                        <option value="">-- Selecciona un departamento --</option>
+                        @* llenado con Jquery *@
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            cargarEmpleados();
+            cargarDepartamentos();
+
+            $('#btnAgregar').click(function () {
+                limpiarFormulario();
+                $('#modalEmpleado').modal('show');
+            });
+
+            $('#btnGuardar').click(function () {
+                let empleado = {
+                    IdEmpleado: $('#IdEmpleado').val(),
+                    Nombre: $('#Nombre').val(),
+                    ApellidoPaterno: $('#ApellidoPaterno').val(),
+                    Departamento: {
+                        IdDepartamento: $('#IdDepartamento').val()
+                    }
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Empleados/Save',
+                    data: JSON.stringify(empleado),
+                    contentType: 'application/json',
+                    success: function () {
+                        $('#modalEmpleado').modal('hide');
+                        cargarEmpleados();
+                    }
+                });
+            });
+        });
+
+        function cargarEmpleados() {
+            $.get('/Empleados/GetAll', function (data) {
+                let tbody = $('#tblEmpleados tbody');
+                tbody.empty();
+                data.forEach(e => {
+                    tbody.append(`
+                        <tr>
+                            <td>${e.nombre}</td>
+                            <td>${e.apellidoPaterno}</td>
+                            <td>${e.departamento.descripcion}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm" onclick="editar(${e.idEmpleado})">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="eliminar(${e.idEmpleado})">Eliminar</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            });
+        }
+
+        function cargarDepartamentos() {
+            $.get('/Departamentos/GetAll', function (data) {
+                let ddl = $('#IdDepartamento');
+                ddl.empty();
+                ddl.append(`<option value="">Selecciona un departamento</option>`);
+                data.forEach(d => {
+                    ddl.append(`<option value="${d.idDepartamento}">${d.descripcion}</option>`);
+                });
+            });
+        }
+
+        function limpiarFormulario() {
+            $('#IdEmpleado').val('');
+            $('#Nombre').val('');
+            $('#ApellidoPaterno').val('');
+            $('#IdDepartamento').val('');
+        }
+
+        function editar(id) {
+            $.get(`/Empleados/GetById/${id}`, function (e) {
+                $('#IdEmpleado').val(e.idEmpleado);
+                $('#Nombre').val(e.nombre);
+                $('#ApellidoPaterno').val(e.apellidoPaterno);
+                $('#IdDepartamento').val(e.departamento.idDepartamento);
+                $('#modalEmpleado').modal('show');
+            });
+        }
+
+        function eliminar(id) {
+            if (confirm('¿Deseas eliminar este empleado?')) {
+                $.post(`/Empleados/Delete/${id}`, function () {
+                    cargarEmpleados();
+                });
+            }
+        }
+    </script>
 }
