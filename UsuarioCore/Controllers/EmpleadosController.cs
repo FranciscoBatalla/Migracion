@@ -30,9 +30,10 @@ namespace PL.Controllers
             empleado.Nombre = "";
             empleado.ApellidoPaterno = "";
             empleado.Departamento.IdDepartamento = 0;
+            empleado.SalarioBase = 0;
 
             ML.Result resultEmpleados = _contextEmpleado.EmpleadosGetAll(empleado);
-            empleado.Empleados = resultEmpleados.Objects;
+            empleado.Empleados = new List<object>();
 
 
             ML.Result resultDeptoGetAll = _contextDepartamento.GetAllDepartamentos();
@@ -98,35 +99,64 @@ namespace PL.Controllers
             {
                 empleado.Departamento.Departamentos = resultDept.Objects;
             }
+            else
+            {
+                empleado.Departamento.Departamentos = new List<object>();
+            }
 
 
             if (IdEmpleado > 0)
             {
                 ML.Result resultEmpleado = _contextEmpleado.GetByIdEmpleado(IdEmpleado);
-                empleado = (ML.Empleado)resultEmpleado.Object!;
+                if (resultEmpleado.Correct)
+                {
+                    empleado = (ML.Empleado)resultEmpleado.Object;
+                    empleado.Departamento.Departamentos = resultDept.Objects;
+
+
+                }
             }
 
             return View(empleado);
-        }
+        }//FUNCIONANDO
 
 
         [HttpPost]
         public IActionResult Formulario(ML.Empleado Empleado)
         {
+            if (!ModelState.IsValid)
+            {
+                Empleado.Departamento = new ML.Departamento();
+                Empleado.Departamento.Departamentos = _contextDepartamento.GetAllDepartamentos().Objects;
+                return View(Empleado);
+
+            }
 
             if (Empleado.IdEmpleado > 0)
             {
                 ML.Result resultUpdate = _contextEmpleado.UpdateEmpleado(Empleado);
+
+                if (resultUpdate.Correct)
+                {
+                    return RedirectToAction("CardsGetAll");
+                }
             }
             else
             {
                 ML.Result resultAdd = _contextEmpleado.AgregarEmpleado(Empleado);
-                return RedirectToAction("CardsGetAll");
+                if (resultAdd.Correct)
+                {
+                    return RedirectToAction("CardsGetAll");
+                }
             }
+
+            //ML.Result resultdept = _contextDepartamento.GetAllDepartamentos();
+            //Empleado.Departamento.Departamentos = resultdept.Objects;
 
 
             return RedirectToAction("CardsGetAll");
-        }
+
+        }//FUNCIONANDO
 
         //FIN CONTROLADOR PARA EL CREATE Y UPDATE (VISTA_CREATEUPDATE)
 
@@ -140,7 +170,7 @@ namespace PL.Controllers
             ML.Result resultDelete = _contextEmpleado.DeleteEmpleado(IdEmpleado);
 
             return RedirectToAction("CardsGetAll");
-        }
+        }//FUNCIONANDO
 
 
         //FIN CONTROLADOR PARA DELETE

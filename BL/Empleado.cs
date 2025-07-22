@@ -45,7 +45,7 @@ namespace BL
                         empleado.Nombre = item.Nombre;
                         empleado.ApellidoPaterno = item.ApellidoPaterno;
                         empleado.ApellidoMaterno = item.ApellidoMaterno;
-                        empleado.FechaNacimiento = item.FechaNacimiento;
+                        empleado.FechaNacimiento =  item.FechaNacimiento;
                         empleado.RFC = item.RFC;
                         empleado.NSS = item.NSS;
                         empleado.CURP = item.CURP;
@@ -53,7 +53,7 @@ namespace BL
                         empleado.SalarioBase = item.SalarioBase;
                         empleado.NoFaltas = item.NoFaltas;
                         empleado.Departamento.IdDepartamento = item.IdDepartamento;
-                        empleado.Departamento.Descripcion = item.NombreDepartamento;
+                        empleado.Departamento.Descripcion = item.Descripcion;
 
                         result.Objects.Add(empleado);
                     }
@@ -123,8 +123,8 @@ namespace BL
                 var NoFaltas = new SqlParameter("@NoFaltas", Empleado.NoFaltas ?? (object)DBNull.Value);
                 var IdDepartamento = new SqlParameter("@IdDepartamento", Empleado.Departamento!.IdDepartamento ?? (object)DBNull.Value);
 
-                var query = _context.Database.ExecuteSqlRaw("AgregarEmpleado @Nombre, @ApellidoPaterno, @ApellidoMaterno, @FechaNacimiento, @RFC, @NSS, @CURP, @FechaIngreso, @SalarioBase, @NoFaltas, @IdDepartamento",
-                    Name, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, RFC, NSS, CURP, FechaIngreso, SalarioBase, NoFaltas, IdDepartamento);
+                var query = _context.Database.ExecuteSqlRaw("AgregarEmpleado @Nombre, @ApellidoPaterno, @ApellidoMaterno, @FechaNacimiento, @RFC, @NSS, @CURP, @FechaIngreso,@IdDepartamento ,@SalarioBase, @NoFaltas",
+                    Name, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, RFC, NSS, CURP, FechaIngreso, IdDepartamento, SalarioBase, NoFaltas);
 
                 if (query > 0)
                 {
@@ -145,7 +145,7 @@ namespace BL
 
 
             return result; ;
-        }
+        }//FUNCIONANDO
 
         //FIN METODO ADD
 
@@ -156,24 +156,27 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                var IdEmpleado = new SqlParameter("@IdEmpleado", Empleado.IdEmpleado);
-                var Name = new SqlParameter("@Nombre", Empleado.Nombre ?? (object)DBNull.Value);
-                var ApellidoPaterno = new SqlParameter("@ApellidoPaterno", Empleado.ApellidoPaterno ?? (object)DBNull.Value);
-                var ApellidoMaterno = new SqlParameter("@ApellidoMaterno", Empleado.ApellidoMaterno ?? (object)DBNull.Value);
-                var FechaNacimiento = new SqlParameter("@FechaNacimiento", Empleado.FechaNacimiento ?? (object)DBNull.Value);
-                var RFC = new SqlParameter("@RFC", Empleado.RFC ?? (object)DBNull.Value);
-                var NSS = new SqlParameter("@NSS", Empleado.NSS ?? (object)DBNull.Value);
-                var CURP = new SqlParameter("@CURP", Empleado.CURP ?? (object)DBNull.Value);
-                var FechaIngreso = new SqlParameter("@FechaIngreso", Empleado.FechaIngreso ?? (object)DBNull.Value);
-                var SalarioBase = new SqlParameter("@SalarioBase", Empleado.SalarioBase ?? (object)DBNull.Value);
-                var NoFaltas = new SqlParameter("@NoFaltas", Empleado.NoFaltas ?? (object)DBNull.Value);
-                var IdDepartamento = new SqlParameter("@IdDepartamento", Empleado.Departamento!.IdDepartamento ?? (object)DBNull.Value);
-                var query = _context.Database.ExecuteSqlRaw("ActualizarEmpleado @IdEmpleado, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @FechaNacimiento, @RFC, @NSS, @CURP, @FechaIngreso, @SalarioBase, @NoFaltas, @IdDepartamento",
-                    IdEmpleado, Name, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, RFC, NSS, CURP, FechaIngreso, SalarioBase, NoFaltas, IdDepartamento);
+                //var IdEmpleado = new SqlParameter("@IdEmpleado", Empleado.IdEmpleado);
+                //var Name = new SqlParameter("@Nombre", Empleado.Nombre ?? (object)DBNull.Value);
+                //var ApellidoPaterno = new SqlParameter("@ApellidoPaterno", Empleado.ApellidoPaterno ?? (object)DBNull.Value);
+                //var ApellidoMaterno = new SqlParameter("@ApellidoMaterno", Empleado.ApellidoMaterno ?? (object)DBNull.Value);
+                //var FechaNacimiento = new SqlParameter("@FechaNacimiento", Empleado.FechaNacimiento ?? (object)DBNull.Value);
+                //var RFC = new SqlParameter("@RFC", Empleado.RFC ?? (object)DBNull.Value);
+                //var NSS = new SqlParameter("@NSS", Empleado.NSS ?? (object)DBNull.Value);
+                //var CURP = new SqlParameter("@CURP", Empleado.CURP ?? (object)DBNull.Value);
+                //var FechaIngreso = new SqlParameter("@FechaIngreso", Empleado.FechaIngreso ?? (object)DBNull.Value);
+                //var SalarioBase = new SqlParameter("@SalarioBase", Empleado.SalarioBase ?? (object)DBNull.Value);
+                //var NoFaltas = new SqlParameter("@NoFaltas", Empleado.NoFaltas ?? (object)DBNull.Value);
+                //var IdDepartamento = new SqlParameter("@IdDepartamento", Empleado.Departamento.IdDepartamento);
+                //                                                                                ^
+                //ESTA MANERA TAMBIEN ES LA CORRECTA SOLO QUE PASA BIEN Y EN ORDEN LOS PARAMETROS |
+                var query = _context.Database.ExecuteSqlRaw($"ActualizarEmpleado {Empleado.IdEmpleado},'{Empleado.Nombre}','{Empleado.ApellidoPaterno}','{Empleado.ApellidoMaterno}','{Empleado.FechaNacimiento}','{Empleado.RFC}','{Empleado.NSS}','{Empleado.CURP}','{Empleado.FechaIngreso}',{Empleado.Departamento.IdDepartamento},{Empleado.SalarioBase},{Empleado.NoFaltas}");
+
                 if (query > 0)
                 {
                     result.Correct = true;
                 }
+
             }
             catch (Exception ex)
             {
@@ -182,7 +185,7 @@ namespace BL
                 result.Ex = ex;
             }
             return result;
-        }
+        } //FUNCIONANDO
         // FIN METODO UPDATE
 
 
@@ -207,11 +210,11 @@ namespace BL
                     empleado.Nombre = query.Nombre;
                     empleado.ApellidoPaterno = query.ApellidoPaterno;
                     empleado.ApellidoMaterno = query.ApellidoMaterno;
-                    empleado.FechaNacimiento = Convert.ToString(query.FechaNacimiento);
+                    empleado.FechaNacimiento =  query.FechaNacimiento;
                     empleado.RFC = query.RFC;
                     empleado.NSS = query.NSS;
                     empleado.CURP = query.CURP;
-                    empleado.FechaIngreso = Convert.ToString(query.FechaIngreso);
+                    empleado.FechaIngreso = query.FechaIngreso;
                     empleado.SalarioBase = query.SalarioBase;
                     empleado.NoFaltas = query.NoFaltas;
                     empleado.Departamento.IdDepartamento = query.IdDepartamento;
@@ -233,7 +236,7 @@ namespace BL
 
 
             return result;
-        }
+        }//FUNCIONANDO
         //FIN METODO GETBYID
 
     }

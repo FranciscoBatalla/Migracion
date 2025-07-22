@@ -20,6 +20,6 @@ namespace DL
         public decimal? SalarioBase { get; set; }
         public int? NoFaltas { get; set; }
         public int? IdDepartamento { get; set; }
-        public string? NombreDepartamento { get; set; }
+        public string? Descripcion { get; set; }
     }
 }

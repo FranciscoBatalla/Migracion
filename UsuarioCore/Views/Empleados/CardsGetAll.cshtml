@@ -24,7 +24,7 @@
                 @if (Model.Departamento.IdDepartamento != 0)
                 {
                     <div class="col-3 text-center  align-content-center">
-                        @Html.LabelFor(model => model.Departamento.Descripcion, new { @class = "label-control" })
+                        @Html.LabelFor(model => model.Departamento.IdDepartamento, "Departamento", new { @class = "label-control" })
                         @Html.DropDownListFor(model => model.Departamento.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
                                  "Selecciona un Departamento", new { @class = "form-control" })
 
@@ -33,7 +33,7 @@
                 else
                 {
                     <div class="col-3 text-center align-content-center">
-                        @Html.DropDownListFor(model => model.Departamento.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
+                        @Html.DropDownListFor(model => model.Departamento!.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
                                  "Selecciona un Departamento", new { @class = "form-control" })
 
                     </div>
@@ -61,59 +61,71 @@
 
 
 </div>
-
-<div class="container mt-4">
-    <div class="row">
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-primary">
-                    <tr>
-                        <th>Editar</th>
-                        <th>IdEmpleado</th>
-                        <th>Nombre</th>
-                        <th>Apellido Paterno</th>
-                        <th>Apellido Materno</th>
-                        <th>Fecha Nacimiento</th>
-                        <th>RFC</th>
-                        <th>NSS</th>
-                        <th>CURP</th>
-                        <th>Fecha Ingreso</th>
-                        <th>Departamento</th>
-                        <th>Salario Base</th>
-                        <th>Faltas</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (ML.Empleado item in Model.Empleados)
-                    {
+@if (Model.Empleados != null && Model.Empleados.Count > 0)
+{
+    <div class="container mt-4">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-primary">
                         <tr>
-                            <td>
-                                <button class="btn btn-warning">
-                                    <i class="bi bi-person-fill-gear"></i> Editar
-                                </button>
-                            </td>
-                            <td>@item.IdEmpleado</td>
-                            <td>@item.Nombre</td>
-                            <td>@item.ApellidoPaterno</td>
-                            <td>@item.ApellidoMaterno</td>
-                            <td>@item.FechaNacimiento</td>
-                            <td>@item.RFC</td>
-                            <td>@item.NSS</td>
-                            <td>@item.CURP</td>
-                            <td>@item.FechaIngreso</td>
-                            <td>@item.Departamento?.Descripcion</td>
-                            <td>@item.SalarioBase?.ToString("C")</td>
-                            <td>@item.NoFaltas</td>
-                            <td>
-                                <button class="btn btn-danger">
-                                    <i class="bi bi-person-dash-fill"></i> Eliminar
-                                </button>
-                            </td>
+                            <th>Editar</th>
+                            <th>IdEmpleado</th>
+                            <th>Nombre</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>RFC</th>
+                            <th>NSS</th>
+                            <th>CURP</th>
+                            <th>Fecha Ingreso</th>
+                            <th>Departamento</th>
+                            <th>Salario Base</th>
+                            <th>Faltas</th>
+                            <th>Eliminar</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Empleado item in Model.Empleados)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Formulario","Empleados", new {IdEmpleado = item.IdEmpleado})" class="btn btn-warning">
+                                        <i class="bi bi-person-fill-gear"></i> Editar
+                                    </a>
+                                </td>
+                                <td>@item.IdEmpleado</td>
+                                <td>@item.Nombre</td>
+                                <td>@item.ApellidoPaterno</td>
+                                <td>@item.ApellidoMaterno</td>
+                                <td>
+                                    @(item.FechaNacimiento.HasValue ? item.FechaNacimiento.Value.ToString("dd/MM/yyyy") : "")
+                                </td>
+                                <td>@item.RFC</td>
+                                <td>@item.NSS</td>
+                                <td>@item.CURP</td>
+                                <td>
+                                    @(item.FechaIngreso.HasValue ? item.FechaIngreso.Value.ToString("dd/MM/yyyy") : "")
+                                </td>
+                                <td>@item.Departamento?.Descripcion</td>
+                                <td>@item.SalarioBase?.ToString("C")</td>
+                                <td>@item.NoFaltas</td>
+                                <td>
+                                    <a href="@Url.Action("Delete","Empleados", new {IdEmpleado = item.IdEmpleado})" class="btn btn-danger">
+                                        <i class="bi bi-person-dash-fill"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+}
+else
+{
+
+    <p class="text-muted">No hay resultados que mostrar. Realiza la busqueda abierta</p>
+}
+
