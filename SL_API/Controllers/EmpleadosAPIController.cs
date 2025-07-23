@@ -10,9 +10,11 @@ namespace SL_API.Controllers
 
 
         private readonly BL.Empleado _context;
-        public EmpleadosAPIController(BL.Empleado context)
+        private readonly BL.Departamento _contextDepartamento;
+        public EmpleadosAPIController(BL.Empleado context, BL.Departamento contextDepartamento)
         {
             _context = context;
+            _contextDepartamento = contextDepartamento;
         }
 
 
@@ -48,7 +50,7 @@ namespace SL_API.Controllers
             ML.Result resultAdd = _context.AgregarEmpleado(empleado);
             if (resultAdd.Correct)
             {
-                return Ok("Empleado Agregado con exito!");
+                return Ok($"El empleado {empleado.Nombre} fue agregado con exito!");
             }
             else
             {
@@ -56,7 +58,8 @@ namespace SL_API.Controllers
             }
         }//FUNCIONANDO
 
-        [HttpDelete]
+        //[HttpDelete]
+        [HttpGet]
         [Route("EliminarEmpleado/{IdEmpleado}")]
         public IActionResult EliminarEmpleado(int IdEmpleado)
         {
@@ -112,6 +115,22 @@ namespace SL_API.Controllers
 
 
         }//FUNCIONANDO
-    }
 
+        [HttpGet]
+        [Route("DepartamentosGetAll")]
+        public IActionResult GetAllDepartamentos()
+        {
+            ML.Result resultGetAll = _contextDepartamento.GetAllDepartamentos();
+            if (resultGetAll.Correct)
+            {
+                return Ok(resultGetAll.Objects);
+            }
+            else
+            {
+                return BadRequest(resultGetAll.ErrorMessage);
+            }
+        }
+
+
+    }
 }

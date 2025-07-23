@@ -45,7 +45,7 @@ namespace BL
                         empleado.Nombre = item.Nombre;
                         empleado.ApellidoPaterno = item.ApellidoPaterno;
                         empleado.ApellidoMaterno = item.ApellidoMaterno;
-                        empleado.FechaNacimiento =  item.FechaNacimiento;
+                        empleado.FechaNacimiento = item.FechaNacimiento;
                         empleado.RFC = item.RFC;
                         empleado.NSS = item.NSS;
                         empleado.CURP = item.CURP;
@@ -210,7 +210,7 @@ namespace BL
                     empleado.Nombre = query.Nombre;
                     empleado.ApellidoPaterno = query.ApellidoPaterno;
                     empleado.ApellidoMaterno = query.ApellidoMaterno;
-                    empleado.FechaNacimiento =  query.FechaNacimiento;
+                    empleado.FechaNacimiento = query.FechaNacimiento;
                     empleado.RFC = query.RFC;
                     empleado.NSS = query.NSS;
                     empleado.CURP = query.CURP;
