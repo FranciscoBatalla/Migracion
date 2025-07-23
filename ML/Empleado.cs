@@ -12,23 +12,23 @@ namespace ML
 
         public int? IdEmpleado { get; set; }
 
-        [Required(ErrorMessage = "El campo Nombre es requerido.")]
+        //[Required(ErrorMessage = "El campo Nombre es requerido.")]
         [StringLength(50, ErrorMessage = "El campo Nombre no puede exceder los 50 caracteres.")]
         [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$", ErrorMessage = "Solo se permiten letras")]
         public string? Nombre { get; set; }
-        [Required(ErrorMessage = "El campo Apellido Paterno es requerido.")]
+        //[Required(ErrorMessage = "El campo Apellido Paterno es requerido.")]
         [StringLength(50, ErrorMessage = "El campo Apellido Paterno no puede exceder los 50 caracteres.")]
         [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$", ErrorMessage = "Solo se permiten letras")]
         public string? ApellidoPaterno { get; set; }
 
-        [Required(ErrorMessage = "El campo Apellido Materno es requerido.")]
+        //[Required(ErrorMessage = "El campo Apellido Materno es requerido.")]
         [StringLength(50, ErrorMessage = "El campo Apellido Maternos no puede exceder los 50 caracteres.")]
         [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$", ErrorMessage = "Solo se permiten letras")]
         public string? ApellidoMaterno { get; set; }
 
         public DateTime? FechaNacimiento { get; set; }
 
-        [Required(ErrorMessage = "RFC requerido")]
+        //[Required(ErrorMessage = "RFC requerido")]
         [RegularExpression(@"^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$", ErrorMessage = "RFC no válido")]
         public string? RFC { get; set; }
 
