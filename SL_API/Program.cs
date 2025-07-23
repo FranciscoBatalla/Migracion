@@ -1,5 +1,6 @@
 using DL;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,47 +16,37 @@ builder.Services.AddCors(options =>
                   .AllowAnyMethod();
         });
 });
-// Add services to the container.
-builder.Services.AddControllersWithViews();
 
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 
 var conString = builder.Configuration.GetConnectionString("ConnectionDB");
-
 builder.Services.AddDbContext<FbatallaProgramacionNcapasContext>(options =>
     options.UseSqlServer(conString));
 
-builder.Services.AddScoped<BL.Usuario>();
-builder.Services.AddScoped<BL.Rol>();
-builder.Services.AddScoped<BL.Estado>();
-builder.Services.AddScoped<BL.Colonia>();
-builder.Services.AddScoped<BL.Municipio>();
+
 builder.Services.AddScoped<BL.Empleado>();
 builder.Services.AddScoped<BL.Departamento>();
-builder.Services.AddScoped<BL.Empleado>();
-
-
-
-
-
+builder.Services.AddScoped<SL_API.Controllers.EmpleadosAPIController>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-app.UseStaticFiles();
-
-app.UseRouting();
 
 app.UseCors("AllowFrontend");
 
+
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllers();
 
 app.Run();

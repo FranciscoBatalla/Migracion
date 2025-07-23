@@ -8,12 +8,11 @@
     <h2 class="mb-4">Lista de Empleados</h2>
 
     <button id="btnAgregar" class="btn btn-success mb-3">Agregar Empleado</button>
-
-    <table class="table table-responsive" id="tblEmpleados">
+    <div class="table-responsive">
+    <table class="table" id="tblEmpleados">
         <thead class="thead-dark">
             <tr>
                 <th>Editar</th>
-                <th>IdEmpleado</th>
                 <th>Nombre</th>
                 <th>Apellido Paterno</th>
                 <th>Apellido Materno</th>
@@ -22,15 +21,17 @@
                 <th>NSS</th>
                 <th>CURP</th>
                 <th>Fecha Ingreso</th>
-                <th>Departamento</th>
                 <th>Salario Base</th>
                 <th>Faltas</th>
+                <th>Departamento</th>
                 <th>Eliminar</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody">
+
         </tbody>
     </table>
+    </div>
 </div>
 
 <!-- Modal para agregar/editar -->
@@ -59,8 +60,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="ApellidoPaterno">Apellido Materno</label>
+                    <input type="text" id="ApellidoMaterno" name="ApellidoMaterno" class="form-control" />
+                </div>
+
+
+
+                <div class="form-group">
                     <label for="FechaNacimiento">Fecha de Nacimiento</label>
-                    <input type="date" id="FechaNacimiento" name="FechaNacimiento" class="form-control" />
+                    <input type="date" id="FechaNacimiento" name="FechaNacimiento" class="form-control"  />
                 </div>
 
                 <div class="form-group">
@@ -105,103 +113,114 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
             </div>
 
         </div>
     </div>
 </div>
 
-
-@section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    var EndpointAgregar = "http://localhost:5252/api/EmpleadosAPI/AgregarEmpleado"
+    var EndpointGetAll = "http://localhost:5252/api/EmpleadosAPI/GetAllEmpleados"
+    var EndpointDepartamentoGetAll = "http://localhost:5252/api/EmpleadosAPI/DepartamentosGetAll"
+    var EndpointEmpleadoGetById = "http://localhost:5252/api/EmpleadosAPI/GetEmpleadoById"
+    var EndpointEliminarEmpleado = "http://localhost:5252/api/EmpleadosAPI/EliminarEmpleado"
+</script>
+
+<script src="~/js/Empleados/Metodos.js"></script>
+@section Scripts {
+
     <script>
-        $(document).ready(function () {
-            cargarEmpleados();
-            cargarDepartamentos();
+        // $(document).ready(function () {
+        //     cargarEmpleados();
+        //     cargarDepartamentos();
 
-            $('#btnAgregar').click(function () {
-                limpiarFormulario();
-                $('#modalEmpleado').modal('show');
-            });
+        //     $('#btnAgregar').click(function () {
+        //         limpiarFormulario();
+        //         $('#modalEmpleado').modal('show');
+        //     });
 
-            $('#btnGuardar').click(function () {
-                let empleado = {
-                    IdEmpleado: $('#IdEmpleado').val(),
-                    Nombre: $('#Nombre').val(),
-                    ApellidoPaterno: $('#ApellidoPaterno').val(),
-                    Departamento: {
-                        IdDepartamento: $('#IdDepartamento').val()
-                    }
-                };
+        //     $('#btnGuardar').click(function () {
+        //         let empleado = {
+        //             IdEmpleado: $('#IdEmpleado').val(),
+        //             Nombre: $('#Nombre').val(),
+        //             ApellidoPaterno: $('#ApellidoPaterno').val(),
+        //             Departamento: {
+        //                 IdDepartamento: $('#IdDepartamento').val()
+        //             }
+        //         };
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/Empleados/Save',
-                    data: JSON.stringify(empleado),
-                    contentType: 'application/json',
-                    success: function () {
-                        $('#modalEmpleado').modal('hide');
-                        cargarEmpleados();
-                    }
-                });
-            });
-        });
+        //         $.ajax({
+        //             type: 'POST',
+        //             url: '/Empleados/Save',
+        //             data: JSON.stringify(empleado),
+        //             contentType: 'application/json',
+        //             success: function () {
+        //                 $('#modalEmpleado').modal('hide');
+        //                 cargarEmpleados();
+        //             }
+        //         });
+        //     });
+        // });
 
-        function cargarEmpleados() {
-            $.get('/Empleados/GetAll', function (data) {
-                let tbody = $('#tblEmpleados tbody');
-                tbody.empty();
-                data.forEach(e => {
-                    tbody.append(`
-                        <tr>
-                            <td>${e.nombre}</td>
-                            <td>${e.apellidoPaterno}</td>
-                            <td>${e.departamento.descripcion}</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm" onclick="editar(${e.idEmpleado})">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="eliminar(${e.idEmpleado})">Eliminar</button>
-                            </td>
-                        </tr>
-                    `);
-                });
-            });
-        }
+        // function cargarEmpleados() {
+        //     $.get('/Empleados/GetAll', function (data) {
+        //         let tbody = $('#tblEmpleados tbody');
+        //         tbody.empty();
+        //         data.forEach(e => {
+        //             tbody.append(`
+        //                 <tr>
+        //                     <td>${e.nombre}</td>
+        //                     <td>${e.apellidoPaterno}</td>
+        //                     <td>${e.departamento.descripcion}</td>
+        //                     <td>
+        //                         <button class="btn btn-warning btn-sm" onclick="editar(${e.idEmpleado})">Editar</button>
+        //                         <button class="btn btn-danger btn-sm" onclick="eliminar(${e.idEmpleado})">Eliminar</button>
+        //                     </td>
+        //                 </tr>
+        //             `);
+        //         });
+        //     });
+        // }
 
-        function cargarDepartamentos() {
-            $.get('/Departamentos/GetAll', function (data) {
-                let ddl = $('#IdDepartamento');
-                ddl.empty();
-                ddl.append(`<option value="">Selecciona un departamento</option>`);
-                data.forEach(d => {
-                    ddl.append(`<option value="${d.idDepartamento}">${d.descripcion}</option>`);
-                });
-            });
-        }
+        // function cargarDepartamentos() {
+        //     $.get('/Departamentos/GetAll', function (data) {
+        //         let ddl = $('#IdDepartamento');
+        //         ddl.empty();
+        //         ddl.append(`<option value="">Selecciona un departamento</option>`);
+        //         data.forEach(d => {
+        //             ddl.append(`<option value="${d.idDepartamento}">${d.descripcion}</option>`);
+        //         });
+        //     });
+        // }
 
-        function limpiarFormulario() {
-            $('#IdEmpleado').val('');
-            $('#Nombre').val('');
-            $('#ApellidoPaterno').val('');
-            $('#IdDepartamento').val('');
-        }
+        // function limpiarFormulario() {
+        //     $('#IdEmpleado').val('');
+        //     $('#Nombre').val('');
+        //     $('#ApellidoPaterno').val('');
+        //     $('#IdDepartamento').val('');
+        // }
 
-        function editar(id) {
-            $.get(`/Empleados/GetById/${id}`, function (e) {
-                $('#IdEmpleado').val(e.idEmpleado);
-                $('#Nombre').val(e.nombre);
-                $('#ApellidoPaterno').val(e.apellidoPaterno);
-                $('#IdDepartamento').val(e.departamento.idDepartamento);
-                $('#modalEmpleado').modal('show');
-            });
-        }
+        // function editar(id) {
+        //     $.get(`/Empleados/GetById/${id}`, function (e) {
+        //         $('#IdEmpleado').val(e.idEmpleado);
+        //         $('#Nombre').val(e.nombre);
+        //         $('#ApellidoPaterno').val(e.apellidoPaterno);
+        //         $('#IdDepartamento').val(e.departamento.idDepartamento);
+        //         $('#modalEmpleado').modal('show');
+        //     });
+        // }
 
-        function eliminar(id) {
-            if (confirm('¿Deseas eliminar este empleado?')) {
-                $.post(`/Empleados/Delete/${id}`, function () {
-                    cargarEmpleados();
-                });
-            }
-        }
+        // function eliminar(id) {
+        //     if (confirm('¿Deseas eliminar este empleado?')) {
+        //         $.post(`/Empleados/Delete/${id}`, function () {
+        //             cargarEmpleados();
+        //         });
+        //     }
+        // }
     </script>
 }
