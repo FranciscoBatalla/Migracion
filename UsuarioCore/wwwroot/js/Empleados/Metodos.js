@@ -103,7 +103,7 @@ function cargarEmpleados() {
 
         },
         error: function (e) {
-            console.log("Ocurrio un error en la solicitur", e)
+            console.log("Ocurrio un error en la solicitud", e)
         },
     }); //FIN AJAX
 } //FUNCIONANDO GETALL
