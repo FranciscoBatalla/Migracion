@@ -58,8 +58,8 @@ namespace SL_API.Controllers
             }
         }//FUNCIONANDO
 
-        //[HttpDelete]
-        [HttpGet]
+        [HttpDelete]
+        //[HttpGet]
         [Route("EliminarEmpleado/{IdEmpleado}")]
         public IActionResult EliminarEmpleado(int IdEmpleado)
         {
