@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿let modo = "agregar";
+
+$(document).ready(function () {
     cargarEmpleados();
     cargarDepartamentos();
 
@@ -9,8 +11,11 @@
     });//cierre btnagregar
 
 
+
+
     $('#btnGuardar').click(function () {
         let empleado = {
+            IdEmpleado: parseInt( $('#IdEmpleado').val()) /*? $('IdEmpleado').val() : 0*/,
             Nombre: $('#Nombre').val(),
             ApellidoPaterno: $('#ApellidoPaterno').val(),
             ApellidoMaterno: $('#ApellidoMaterno').val(),
@@ -20,25 +25,27 @@
             CURP: $('#CURP').val(),
             FechaIngreso: $('#FechaIngreso').val(),
             SalarioBase: $('#SalarioBase').val(),
-            NoFaltas: $('#NoFaltas').val(),
+            NoFaltas: parseInt( $('#NoFaltas').val()),
             Departamento: {
                 IdDepartamento: $('#IdDepartamento').val()
             }
         };
-        console.log(JSON.stringify(empleado))
 
-
-
-        $.ajax({
-            type: 'POST',
-            url: EndpointAgregar,
+        const metodo = {
+            type: (modo === "agregar") ? 'POST' : 'PUT',
+            url: (modo === "agregar") ? EndpointAgregar : EndpointEditarEmpleado + "/" + empleado.IdEmpleado,
             data: JSON.stringify(empleado),
             contentType: 'application/json',
             success: function () {
                 $('#modalEmpleado').modal('hide');
                 cargarEmpleados();
+            },
+            error: function (e) {
+                console.log("Error", e.responseText)
             }
-        });
+        };
+
+        $.ajax(metodo);
     });
 
 });//document.ready
@@ -133,32 +140,68 @@ function limpiarFormulario() {
     $('#IdDepartamento').val('');
 }
 function editar(idEmpleado) {
-    $.get(EndpointEmpleadoGetById + `/${idEmpleado}`, function (e) {
-        $('#IdEmpleado').val(e.idEmpleado);
-        $('#Nombre').val(e.nombre);
-        $('#ApellidoPaterno').val(e.apellidoPaterno);
-        $('#ApellidoMaterno').val(e.apellidoMaterno);
-        $('#FechaNacimiento').val(e.fechaNacimiento);
-        $('#RFC').val(e.rfc);
-        $('#NSS').val(e.nss);
-        $('#CURP').val(e.curp);
-        $('#FechaIngreso').val(e.fechaIngreso);
-        $('#SalarioBase').val(e.salarioBase);
-        $('#NoFaltas').val(e.noFaltas);
-        $('#IdDepartamento').val(e.departamento.idDepartamento);
-        $('#modalEmpleado').modal('show');
+    $.ajax({
+        type: 'GET',
+        url: EndpointEmpleadoGetById + `/${idEmpleado}`,
+        success: function (data) {
+            $('#IdEmpleado').val(data.idEmpleado);
+            $('#Nombre').val(data.nombre);
+            $('#ApellidoPaterno').val(data.apellidoPaterno);
+            $('#ApellidoMaterno').val(data.apellidoMaterno);
+            $('#FechaNacimiento').val(data.fechaNacimiento.substring(0, 10));
+            $('#RFC').val(data.rfc);
+            $('#NSS').val(data.nss);
+            $('#CURP').val(data.curp);
+            $('#FechaIngreso').val(data.fechaIngreso.substring(0, 10));
+            $('#SalarioBase').val(data.salarioBase);
+            $('#NoFaltas').val(data.noFaltas);
+            $('#IdDepartamento').val(data.departamento.idDepartamento);
+
+            modo = "editar";
+            $('#modalTitle').text('Editar Empleado');
+            $('#modalEmpleado').modal('show');
+        },
+        error: function (xhr) {
+            console.error("Error al obtener el empleado:", xhr.responseText);
+        }
     });
 }
 
 
 
 function eliminar(id) {
-    if (confirm('¿Deseas eliminar este empleado?')) {
-        $.get(EndpointEliminarEmpleado +`/${id}`, function () {
-            cargarEmpleados();
+    //if (confirm('¿Deseas eliminar este empleado?')) {
+    //    $.get(EndpointEliminarEmpleado + `/${id}`, function () {
+    //        cargarEmpleados();
+    //    });
+
+
+        $.ajax({
+            type: 'DELETE',
+            url: EndpointEliminarEmpleado + `/${id}`,
+            data: 'JSON',
+            contentType: 'application/json',
+            success: function () {
+                $('#modalEmpleado').modal('hide');
+                cargarEmpleados();
+            },
+            error: function (e) {
+                console.log("Error", e.responseText)
+            },
         });
     }
-}
+//}
+
+
+
+
+
+
+
+
+
+
+
 
 //$(document).on('click', '.eliminarbtn', function () {
 
