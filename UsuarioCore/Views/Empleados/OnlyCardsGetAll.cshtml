@@ -1,0 +1,36 @@
+﻿@model ML.Empleado
+
+<div class="container mt-4">
+    <div class="row">
+        @if (Model.Empleados != null)
+        {
+            @foreach (ML.Empleado item in Model.Empleados)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <strong>@item.Nombre @item.ApellidoPaterno</strong>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Apellido Materno:</strong> @item.ApellidoMaterno</p>
+                            <p><strong>Fecha Nacimiento:</strong> @item.FechaNacimiento?.ToString("dd/MM/yyyy")</p>
+                            <p><strong>RFC:</strong> @item.RFC</p>
+                            <p><strong>NSS:</strong> @item.NSS</p>
+                            <p><strong>CURP:</strong> @item.CURP</p>
+                            <p><strong>Fecha Ingreso:</strong> @item.FechaIngreso?.ToString("dd/MM/yyyy")</p>
+                            <p><strong>Salario Base:</strong> $@String.Format("{0:N2}", item.SalarioBase)</p>
+                            <p><strong>No. de Faltas:</strong> @item.NoFaltas</p>
+                            <p><strong>Departamento:</strong> @item.Departamento?.Descripcion</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                No hay empleados para mostrar.
+            </div>
+        }
+    </div>
+</div>

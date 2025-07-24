@@ -177,6 +177,38 @@ namespace PL.Controllers
 
 
 
+
+        [HttpGet]
+        public IActionResult OnlyCardsGetAll(ML.Empleado empleado)
+        {
+            //ML.Empleado empleado = new ML.Empleado();
+            empleado.Departamento = new ML.Departamento();
+            empleado.Nombre =  "";
+            empleado.ApellidoPaterno = "";
+            empleado.Departamento.IdDepartamento = 0;
+
+            ML.Result resultdept = _contextDepartamento.GetAllDepartamentos();
+            if (resultdept.Correct && resultdept.Objects != null)
+            {
+                empleado.Departamento.Departamentos = resultdept.Objects;
+            }
+            else
+            {
+                empleado.Departamento.Departamentos = new List<object>();
+            }
+
+            ML.Result resultegetall = _contextEmpleado.EmpleadosGetAll(empleado);
+            if (resultegetall.Correct && resultegetall.Objects != null)
+            {
+                empleado.Empleados = resultegetall.Objects;
+            }
+            else
+            {
+                empleado.Empleados = new List<object>();
+            }
+
+            return View(empleado);
+        }
     }
 
 
