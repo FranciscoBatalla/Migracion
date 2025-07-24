@@ -9,28 +9,27 @@
 
     <button id="btnAgregar" class="btn btn-success mb-3">Agregar Empleado</button>
     <div class="table-responsive">
-    <table class="table" id="tblEmpleados">
-        <thead class="thead-dark">
-            <tr>
-                <th>Editar</th>
-                <th>Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Fecha Nacimiento</th>
-                <th>RFC</th>
-                <th>NSS</th>
-                <th>CURP</th>
-                <th>Fecha Ingreso</th>
-                <th>Salario Base</th>
-                <th>Faltas</th>
-                <th>Departamento</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody id="tbody">
-
-        </tbody>
-    </table>
+        <table class="table" id="tblEmpleados">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Editar</th>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>RFC</th>
+                    <th>NSS</th>
+                    <th>CURP</th>
+                    <th>Fecha Ingreso</th>
+                    <th>Salario Base</th>
+                    <th>Faltas</th>
+                    <th>Departamento</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -51,62 +50,123 @@
 
                 <div class="form-group">
                     <label for="Nombre">Nombre</label>
-                    <input type="text" id="Nombre" name="Nombre" class="form-control" />
+                    <input type="text" id="Nombre" name="Nombre" class="form-control" onkeypress="validarLetras(this, event)" onblur="validarLetras(this, event)" />
+                    <div class="valid-feedback">
+                        correcto!
+                    </div>
+                    <div class="invalid-feedback">
+                        Solo se aceptan letras.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="ApellidoPaterno">Apellido Paterno</label>
-                    <input type="text" id="ApellidoPaterno" name="ApellidoPaterno" class="form-control" />
+                    <input type="text" id="ApellidoPaterno" name="ApellidoPaterno" class="form-control" onkeypress="validarLetras(this, event)" onblur="validarLetras(this, event)" />
+                    <div class="valid-feedback">
+                        correcto!
+                    </div>
+                    <div class="invalid-feedback">
+                        Solo se aceptan letras.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="ApellidoPaterno">Apellido Materno</label>
-                    <input type="text" id="ApellidoMaterno" name="ApellidoMaterno" class="form-control" />
+                    <input type="text" id="ApellidoMaterno" name="ApellidoMaterno" class="form-control" onkeypress="validarLetras(this, event)" onblur="validarLetras(this, event)" />
+                    <div class="valid-feedback">
+                        correcto!
+                    </div>
+                    <div class="invalid-feedback">
+                        Solo se aceptan letras.
+                    </div>
                 </div>
 
 
 
                 <div class="form-group">
                     <label for="FechaNacimiento">Fecha de Nacimiento</label>
-                    <input type="date" id="FechaNacimiento" name="FechaNacimiento" class="form-control"  />
+                    <input type="date" id="FechaNacimiento" name="FechaNacimiento" class="form-control" onblur="validarFecha(this, event)" />
+                    <div class="valid-feedback">
+                        Correcto!
+                    </div>
+                    <div class="invalid-feedback">
+                        Fecha Invalida, intenta de nuevo!
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="RFC">RFC</label>
-                    <input type="text" id="RFC" name="RFC" class="form-control" />
+                    <input type="text" id="RFC" name="RFC" class="form-control" onkeypress="validarRFC(this, event)"
+                           onblur="validarLetrasyNumeros(this, event)" />
+                    <div class="valid-feedback">
+                        Es un RFC valido!
+                    </div>
+                    <div class="invalid-feedback">
+                        Tu RFC no es un RFC valido:(.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="NSS">NSS</label>
-                    <input type="text" id="NSS" name="NSS" class="form-control" />
+                    <input type="text" id="NSS" name="NSS" class="form-control" onkeypress="validarLetrasyNumeros(this, event)"
+                           onblur="validarLetrasyNumeros(this, event)" />
                 </div>
 
                 <div class="form-group">
                     <label for="CURP">CURP</label>
-                    <input type="text" id="CURP" name="CURP" class="form-control" />
+                    <input type="text" id="CURP" name="CURP" class="form-control" onblur="ValidarCURP(this, event)" />
+                    <div class="valid-feedback">
+                        Es un CURP valido!
+                    </div>
+                    <div class="invalid-feedback">
+                        Tu CURP no es un CURP valido:(.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="FechaIngreso">Fecha Ingreso</label>
-                    <input type="date" id="FechaIngreso" name="FechaIngreso" class="form-control" />
+                    <input type="date" id="FechaIngreso" name="FechaIngreso" class="form-control" onblur="validarFecha(this, event)" />
+                    <div class="valid-feedback">
+                        Correcto!
+                    </div>
+                    <div class="invalid-feedback">
+                        Fecha Invalida, intenta de nuevo!
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="SalarioBase">Salario Base</label>
-                    <input type="number" id="SalarioBase" name="SalarioBase" class="form-control" step="0.01" min="0" />
+                    <input type="number" id="SalarioBase" name="SalarioBase" class="form-control" step="0.01" min="0" onekepress="validarSoloNumeros(this, event)" onblur="validarSoloNumeros(this, event)" />
+                    <div class="valid-feedback">
+                        correcto!
+                    </div>
+                    <div class="invalid-feedback">
+                        Solo se aceptan Numeros.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="NoFaltas">Número de Faltas</label>
-                    <input type="number" id="NoFaltas" name="NoFaltas" class="form-control" min="0" />
+                    <input type="number" id="NoFaltas" name="NoFaltas" class="form-control" min="0" onekeypress="validarSoloNumeros(this, event)" onblur="validarSoloNumeros(this, event)" />
+                    <div class="valid-feedback">
+                        correcto!
+                    </div>
+                    <div class="invalid-feedback">
+                        Solo se aceptan Numeros.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="IdDepartamento">Departamento</label>
-                    <select id="IdDepartamento" name="IdDepartamento" class="form-control">
+                    <select id="IdDepartamento" name="IdDepartamento" class="form-control" onchange="ValidarDepartamento(this, event)">
                         <option value="">-- Selecciona un departamento --</option>
-                        @* llenado con Jquery *@
                     </select>
+                    <div class="valid-feedback">
+                        Correcto!
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor Selecciona un Departamento!
+                    </div>
                 </div>
 
             </div>
@@ -120,8 +180,11 @@
     </div>
 </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+@* SWIFT ALERT *@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 
 <script>
     var EndpointAgregar = "http://localhost:5252/api/EmpleadosAPI/AgregarEmpleado"
