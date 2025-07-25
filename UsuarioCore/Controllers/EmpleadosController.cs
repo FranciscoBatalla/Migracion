@@ -178,12 +178,14 @@ namespace PL.Controllers
 
 
 
+        //CONTROLADORES PARA PURAS CARDS
+
         [HttpGet]
-        public IActionResult OnlyCardsGetAll(ML.Empleado empleado)
+        public IActionResult OnlyCardsGetAll()
         {
-            //ML.Empleado empleado = new ML.Empleado();
+            ML.Empleado empleado = new ML.Empleado();
             empleado.Departamento = new ML.Departamento();
-            empleado.Nombre =  "";
+            empleado.Nombre = "";
             empleado.ApellidoPaterno = "";
             empleado.Departamento.IdDepartamento = 0;
 
@@ -200,18 +202,107 @@ namespace PL.Controllers
             ML.Result resultegetall = _contextEmpleado.EmpleadosGetAll(empleado);
             if (resultegetall.Correct && resultegetall.Objects != null)
             {
-                empleado.Empleados = resultegetall.Objects;
-            }
-            else
-            {
                 empleado.Empleados = new List<object>();
             }
 
             return View(empleado);
         }
+
+
+        [HttpPost]
+        public IActionResult OnlyCardsGetAll(ML.Empleado empleado)
+        {
+            empleado.Nombre = empleado.Nombre ?? "";
+            empleado.ApellidoPaterno = empleado.ApellidoPaterno ?? "";
+            empleado.Departamento = new ML.Departamento();
+            empleado.Departamento.IdDepartamento = empleado.Departamento.IdDepartamento ?? 0;
+
+            ML.Result resultDepto = _contextDepartamento.GetAllDepartamentos();
+            if (resultDepto.Correct)
+            {
+                empleado.Departamento.Departamentos = resultDepto.Objects;
+            }
+
+            ML.Result resultGetAll = _contextEmpleado.EmpleadosGetAll(empleado);
+            if (resultGetAll.Correct)
+            {
+                empleado.Empleados = resultGetAll.Objects;
+            }
+            return View(empleado);
+        }
+
+
+
+        [HttpGet]
+        public IActionResult FormularioCards(int IdEmpleado)
+        {
+            ML.Empleado empleado = new ML.Empleado();
+            empleado.Departamento = new ML.Departamento();
+
+            ML.Result resultDepto = _contextDepartamento.GetAllDepartamentos();
+            if (resultDepto.Correct)
+            {
+                empleado.Departamento.Departamentos = resultDepto.Objects;
+            }
+
+            if (IdEmpleado > 0)
+            {
+                ML.Result resultGetById = _contextEmpleado.GetByIdEmpleado(IdEmpleado);
+                if (resultGetById.Correct)
+                {
+                    empleado = (ML.Empleado)resultGetById.Object;
+                    empleado.Departamento.Departamentos = resultDepto.Objects;
+                }
+            }
+
+            return View(empleado);
+        }
+
+        [HttpPost]
+        public IActionResult FormularioCards(ML.Empleado empleado)
+        {
+            if (!ModelState.IsValid)
+            {
+                empleado.Departamento = new ML.Departamento();
+                empleado.Departamento.Departamentos = _contextDepartamento.GetAllDepartamentos().Objects;
+                return View(empleado);
+            }
+            if (empleado.IdEmpleado > 0)
+            {
+                ML.Result resultUpdate = _contextEmpleado.UpdateEmpleado(empleado);
+                if (resultUpdate.Correct)
+                {
+                    return RedirectToAction("OnlyCardsGetAll");
+                }
+            }
+            else
+            {
+                ML.Result resultAdd = _contextEmpleado.AgregarEmpleado(empleado);
+                if (resultAdd.Correct)
+                {
+                    return RedirectToAction("OnlyCardsGetAll");
+                }
+            }
+            return RedirectToAction("OnlyCardsGetAll");
+
+
+            //FIN CONTROLADORES DE PURAS CARDS
+        }
+
+
+
+        [HttpGet]
+        public IActionResult DeleteCards(int IdEmpleado)
+        {
+            ML.Result resultDelete = _contextEmpleado.DeleteEmpleado(IdEmpleado);
+
+            return RedirectToAction("OnlyCardsGetAll");
+        }//FUNCIONANDO
+
+        //FIN CONTROLADORES PARA PURAS CARDS
+
+
     }
-
-
 }
 
 
