@@ -165,9 +165,9 @@
 
 
                 <div class="col-md-6 mb-3">
-                    @Html.LabelFor(model => model.Departamento.IdDepartamento, new { @class = "form-label" })
-                    @Html.DropDownListFor(model => model.Departamento.IdDepartamento,
-                             new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
+                    @Html.LabelFor(model => model.Departamento!.IdDepartamento, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Departamento!.IdDepartamento,
+                             new SelectList(Model.Departamento!.Departamentos, "IdDepartamento", "Descripcion"),
                              "-- Selecciona un departamento --",
                              new { @class = "form-control", required = "required" })
                     <div class="valid-feedback">
@@ -179,10 +179,14 @@
                 </div>
 
                 <div class="col-6 mt-3">
-                    <a href="@Url.Action("CardsGetAll","Empleados")" class="btn btn-secondary w-100">Regresar</a>
+                    <a href="@Url.Action("CardsGetAll","Empleados")" class="btn btn-secondary w-100">
+                        <i class="bi bi-skip-backward-fill"></i> Regresar
+                    </a>
                 </div>
                 <div class="col-6 mt-3">
-                    <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                    <button type="submit" class="btn btn-primary w-100">
+                        Guardar  <i class="bi bi-floppy-fill"></i>
+                    </button>
 
                 </div>
             </div>

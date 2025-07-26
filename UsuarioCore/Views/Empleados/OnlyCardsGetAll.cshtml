@@ -17,20 +17,20 @@
                     <input type="text" class="form-control" name="ApellidoPaterno" id="ApellidoPaterno" value="" placeholder="Tu apellido paterno" />
                 </div>
 
-                @if (Model.Departamento.Departamentos != null)
+                @if (Model.Departamento!.Departamentos != null)
                 {
 
                     <div class="col-2">
-                        @Html.LabelFor(model => model.Departamento.Descripcion, "Departamento", new { @class = "label-form" })
-                        @Html.DropDownListFor(model => model.Departamento.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
+                        @Html.LabelFor(model => model.Departamento!.Descripcion, "Departamento", new { @class = "label-form" })
+                        @Html.DropDownListFor(model => model.Departamento!.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
                                  "Seleccione un Departamento", new { @class = "form-control" })
                     </div>
                 }
                 else
                 {
                     <div class="col-2">
-                        @Html.LabelFor(model => model.Departamento.Descripcion, "Departamento", new { @class = "label-form" })
-                        @Html.DropDownListFor(model => model.Departamento.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
+                        @Html.LabelFor(model => model.Departamento!.Descripcion, "Departamento", new { @class = "label-form" })
+                        @Html.DropDownListFor(model => model.Departamento!.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
                                  "Seleccione un Departamento", new { @class = "form-control" })
                     </div>
                 }
@@ -38,10 +38,10 @@
 
 
                 <div class="col-2 align-content-center">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
+                    <button type="submit" class="btn btn-primary"> Buscar <i class="bi bi-search"></i></button>
                 </div>
                 <div class="col-2 align-content-center">
-                    <a href="@Url.Action("FormularioCards","Empleados")" class="btn btn-success">Agregar</a>
+                    <a href="@Url.Action("FormularioCards","Empleados")" class="btn btn-success">Agregar <i class="bi bi-person-plus-fill"></i></a>
 
                 </div>
             </div>
@@ -82,8 +82,9 @@
         }
         else
         {
-            <div class="alert alert-warning" role="alert">
-                No hay empleados para mostrar.
+            <div class="alert alert-dark" role="alert">
+                <p>No hay resultados que mostrar. <strong>¡Realiza la busqueda abierta!</strong></p>
+
             </div>
         }
     </div>

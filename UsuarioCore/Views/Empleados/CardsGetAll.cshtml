@@ -23,8 +23,8 @@
 
                 @if (Model.Departamento.IdDepartamento != 0)
                 {
-                    <div class="col-3 text-center  align-content-center">
-                        @Html.LabelFor(model => model.Departamento.IdDepartamento, "Departamento", new { @class = "label-control" })
+                    <div class="col-3  align-content-center">
+                        @Html.LabelFor(model => model.Departamento.Descripcion, "Departamento", new { @class = "label-control" })
                         @Html.DropDownListFor(model => model.Departamento.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
                                  "Selecciona un Departamento", new { @class = "form-control" })
 
@@ -32,7 +32,8 @@
                 }
                 else
                 {
-                    <div class="col-3 text-center align-content-center">
+                    <div class="col-3 align-content-center">
+                        @Html.LabelFor(model => model.Departamento.Descripcion, "Departamento", new { @class = "label-control" })
                         @Html.DropDownListFor(model => model.Departamento!.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
                                  "Selecciona un Departamento", new { @class = "form-control" })
 
@@ -41,12 +42,12 @@
 
 
                 <div class="col-2 align-content-center">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
+                    <button type="submit" class="btn btn-primary">Buscar <i class="bi bi-search"></i></button>
                 </div>
 
                 <div class="col-2 align-content-center">
                     <a href="@Url.Action("Formulario", "Empleados")" class="btn btn-success">
-                        Add
+                        Add <i class="bi bi-person-plus-fill"></i>
                     </a>
                 </div>
 
@@ -125,7 +126,10 @@
 }
 else
 {
+    <br />
+    <div class=" alert alert-dark" role="alert">
 
-    <p class="text-muted">No hay resultados que mostrar. Realiza la busqueda abierta</p>
+        <p>No hay resultados que mostrar. <strong>¡Realiza la busqueda abierta!</strong></p>
+    </div>
 }
 
