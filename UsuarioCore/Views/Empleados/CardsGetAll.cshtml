@@ -21,11 +21,11 @@
                 </div>
 
 
-                @if (Model.Departamento.IdDepartamento != 0)
+                @if (Model.Departamento!.IdDepartamento != 0)
                 {
                     <div class="col-3  align-content-center">
-                        @Html.LabelFor(model => model.Departamento.Descripcion, "Departamento", new { @class = "label-control" })
-                        @Html.DropDownListFor(model => model.Departamento.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
+                        @Html.LabelFor(model => model.Departamento!.Descripcion, "Departamento", new { @class = "label-control" })
+                        @Html.DropDownListFor(model => model.Departamento!.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
                                  "Selecciona un Departamento", new { @class = "form-control" })
 
                     </div>
@@ -33,7 +33,7 @@
                 else
                 {
                     <div class="col-3 align-content-center">
-                        @Html.LabelFor(model => model.Departamento.Descripcion, "Departamento", new { @class = "label-control" })
+                        @Html.LabelFor(model => model.Departamento!.Descripcion, "Departamento", new { @class = "label-control" })
                         @Html.DropDownListFor(model => model.Departamento!.IdDepartamento, new SelectList(Model.Departamento.Departamentos, "IdDepartamento", "Descripcion"),
                                  "Selecciona un Departamento", new { @class = "form-control" })
 
